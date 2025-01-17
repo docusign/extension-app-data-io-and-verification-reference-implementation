@@ -26,6 +26,7 @@ app.set('views', viewsPath);
 app.set('view engine', 'pug');
 app.set('views', './views');
 
+app.use(express.static('./views'));
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ extended: true }));
 
