@@ -1,8 +1,8 @@
 {
-  "name": "File Archive and Data Verification App",
+  "name": "File Archive and Verification",
   "description": {
-    "short": "App for file archive",
-    "long": "This app is designed to allow for users to archive a signed DocuSign agreement"
+    "short": "App for file archive and data verification",
+    "long": "This app is designed to allow for users to archive a signed DocuSign agreement and verify different kinds of data fields with the database values"
   },
   "icon": {
     "data": "iVBORw0KGgoAAAANSUhEUgAAAGAAAABgCAYAAADimHc4AAAACXBIWXMAACxLAAAsSwGlPZapAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAADcSURBVHgB7dwxCsMwEADBc8j/v+zUgTRJZNY2M6ULF1oOhECaAQAAAAAA7m778G0fjvS25o8hJUBMgJgAMQFi23xvX/ivK1uyDiYgJkBMgJgAMQFizzm/f8+mTr07MwExAWICxASICRC7wi7o1mdMJiAmQEyAmAAxAWICxASICRATICZATICYADEBYgLEBIgJEBMgJkBMgJgAMQFiAsQEiAkQEyAmQEyAmAAxAWICxASICRATICZATICYADEBYgLEBIitvCfsxd0fmICYADEBYgLEBAAAAAAAADjYCwxUBYWYirDwAAAAAElFTkSuQmCC",
