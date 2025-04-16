@@ -1,0 +1,180 @@
+{
+  "name": "File Archive and Verification",
+  "description": {
+    "short": "App for file archive and data verification",
+    "long": "This app is designed to allow for users to archive a signed DocuSign agreement and verify different kinds of data fields with the database values"
+  },
+  "icon": {
+    "data": "iVBORw0KGgoAAAANSUhEUgAAAGAAAABgCAYAAADimHc4AAAACXBIWXMAACxLAAAsSwGlPZapAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAADcSURBVHgB7dwxCsMwEADBc8j/v+zUgTRJZNY2M6ULF1oOhECaAQAAAAAA7m778G0fjvS25o8hJUBMgJgAMQFi23xvX/ivK1uyDiYgJkBMgJgAMQFizzm/f8+mTr07MwExAWICxASICRC7wi7o1mdMJiAmQEyAmAAxAWICxASICRATICZATICYADEBYgLEBIgJEBMgJkBMgJgAMQFiAsQEiAkQEyAmQEyAmAAxAWICxASICRATICZATICYADEBYgLEBIitvCfsxd0fmICYADEBYgLEBAAAAAAAADjYCwxUBYWYirDwAAAAAElFTkSuQmCC",
+    "mediaType": "image/png"
+  },
+  "screenshots": [],
+  "publisher": {
+    "name": "John Doe",
+    "email": "john.doe@gmail.com",
+    "phone": "800-867-5309",
+    "website": "www.johndoe.com"
+  },
+  "termsOfServiceUrl": "www.johndoe.com/tos",
+  "privacyUrl": "www.johndoe.com/privacy",
+  "supportUrl": "www.johndoe.com/support",
+  "connections": [
+    {
+      "name": "authentication",
+      "description": "secure connection to the file archive proxy",
+      "type": "oauth2",
+      "params": {
+        "provider": "CUSTOM",
+        "scopes": [],
+        "clientId": "<CLIENT_ID>",
+        "clientSecret": "<CLIENT_SECRET>",
+        "customConfig": {
+          "tokenUrl": "<PROXY_BASE_URL>/api/oauth/token",
+          "authorizationUrl": "<PROXY_BASE_URL>/api/oauth/authorize",
+          "authorizationParams": {
+            "access_type": "offline",
+            "prompt": "consent"
+          },
+          "authorizationMethod": "header",
+          "scopeSeparator": " ",
+          "requiredScopes": []
+        }
+      }
+    }
+  ],
+  "extensions": [
+    {
+      "name": "My Archive Extension",
+      "description": "using to archive an envelope",
+      "template": "EAP.Version1.SpecifiedArchive",
+      "actionReferences": ["My Archive Action"]
+    },
+    {
+      "name": "My Bank Account Owner Verification Extension",
+      "description": "Verify bank account owner",
+      "template": "Verify.Version1.BankAccountOwner",
+      "actionReferences": ["My Bank Account Owner Verification Action"]
+    },
+    {
+      "name": "My Bank Account Verification Extension",
+      "description": "Verify bank account",
+      "template": "Verify.Version3.BankAccount",
+      "actionReferences": ["My Bank Account Verification Action"]
+    },
+    {
+      "name": "My Business FEIN Verification Extension",
+      "description": "Verify business FEIN",
+      "template": "Verify.Version1.BusinessEntity",
+      "actionReferences": ["My Business FEIN Verification Action"]
+    },
+    {
+      "name": "My Email Verification Extension",
+      "description": "Verify email",
+      "template": "Verify.Version1.Email",
+      "actionReferences": ["My Email Verification Action"]
+    },
+    {
+      "name": "My Phone Verification Extension",
+      "description": "Verify phone number",
+      "template": "Verify.Version1.PhoneNumber",
+      "actionReferences": ["My Phone Verification Action"]
+    },
+    {
+      "name": "My Postal Address Verification Extension",
+      "description": "Verify postal address",
+      "template": "Verify.Version1.PostalAddress",
+      "actionReferences": ["postal-address-verify", "postal-address-suggestion"]
+    },
+    {
+      "name": "My SSN Verification Extension",
+      "description": "Verify SSN",
+      "template": "Verify.Version2.SocialSecurityNumber",
+      "actionReferences": ["My SSN Verification Action"]
+    }
+  ],
+  "actions": [
+    {
+      "name": "My Archive Action",
+      "description": "something about archiving to a proxy",
+      "template": "Document.Version1.SpecifiedArchive",
+      "connectionsReference": "authentication",
+      "params": {
+        "uri": "<PROXY_BASE_URL>/api/archive"
+      }
+    },
+    {
+      "name": "My Bank Account Owner Verification Action",
+      "description": "Verify bank account owner with a proxy",
+      "template": "Verify.Version1.BankAccountOwner",
+      "connectionsReference": "authentication",
+      "params": {
+        "uri": "<PROXY_BASE_URL>/api/verify/bankAccountOwner"
+      }
+    },
+    {
+      "name": "My Bank Account Verification Action",
+      "description": "Verify bank account with a proxy",
+      "template": "Verify.Version3.BankAccount",
+      "connectionsReference": "authentication",
+      "params": {
+        "uri": "<PROXY_BASE_URL>/api/verify/bankAccount"
+      }
+    },
+    {
+      "name": "My Business FEIN Verification Action",
+      "description": "Verify business FEIN with a proxy",
+      "template": "Verify.Version1.BusinessEntity",
+      "connectionsReference": "authentication",
+      "params": {
+        "uri": "<PROXY_BASE_URL>/api/verify/businessFEIN"
+      }
+    },
+    {
+      "name": "My Email Verification Action",
+      "description": "Verify email with a proxy",
+      "template": "Verify.Version1.Email",
+      "connectionsReference": "authentication",
+      "params": {
+        "uri": "<PROXY_BASE_URL>/api/verify/email"
+      }
+    },
+    {
+      "name": "My Phone Verification Action",
+      "description": "Verify phone number with a proxy",
+      "template": "Verify.Version1.PhoneNumber",
+      "connectionsReference": "authentication",
+      "params": {
+        "uri": "<PROXY_BASE_URL>/api/verify/phone"
+      }
+    },
+    {
+      "name": "postal-address-verify",
+      "description": "Verify postal address with a proxy",
+      "template": "Verify.Version1.PostalAddress",
+      "connectionsReference": "authentication",
+      "params": {
+        "uri": "<PROXY_BASE_URL>/api/verify/postalAddress"
+      }
+    },
+    {
+      "name": "postal-address-suggestion",
+      "description": "Provide typeahead suggestions and verify postal address with a proxy",
+      "template": "Typeahead.Version1.PostalAddress",
+      "connectionsReference": "authentication",
+      "params": {
+        "uri": "<PROXY_BASE_URL>/api/verify/typeaheadAddress"
+      }
+    },
+    {
+      "name": "My SSN Verification Action",
+      "description": "Verify SSN with a proxy",
+      "template": "Verify.Version2.SocialSecurityNumber",
+      "connectionsReference": "authentication",
+      "params": {
+        "uri": "<PROXY_BASE_URL>/api/verify/ssn"
+      }
+    }
+  ],
+  "publicationRegions": ["US"],
+  "distribution": "PUBLIC"
+}
