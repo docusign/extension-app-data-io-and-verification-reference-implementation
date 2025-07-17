@@ -1,8 +1,8 @@
 {
-  "name": "Data verification",
+  "name": "Data verification and data read app",
   "description": {
-    "short": "App for data verification",
-    "long": "This app is designed to allow for users to verify different kinds of data fields with the database values"
+    "short": "App for data verification and io",
+    "long": "This app is designed to allow for users to verify different kinds of data fields with the database values, use data io extensions"
   },
   "icon": {
     "data": "iVBORw0KGgoAAAANSUhEUgAAAGAAAABgCAMAAADVRocKAAAACXBIWXMAACxLAAAsSwGlPZapAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAABFUExURQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANzq6vcAAAAWdFJOUwAQIDBAT1BfYG9wf4CPkJ+gr7/P3+/xrKm8AAADAElEQVRo3u2Z25arIAxAQSnjrYKI/v+nnlkFW60mhNB5Oat5bHEHkhBCEOIrX/kKVaRujfN+/ZVldmZQ8qPw8UE+ijf6M0rUtKyQGF08+R6mh3X8VH+Jf6jo2fzGryTxPyx85d582urqYY6qVq2dD39ODDu1O+sspjkFjGzsfkTuIuT99bFroXBsduu455nn9aVTaAy/7Ghy+E/vzio1Vsexs2Twl4EyfGDzfUX+gMW35I/ksA2lTGnz78DYO4awknsJnxCtTRl/XbuEA5ZC/rrgbpgCf2Tzf3cmwUBe8vnriqWlGKFVCR+bXs92gNkn7yGxxTyfH0JkkbgHNJtvFb4En44CnC9EyN4LkHjDMFXAFwpjWN4C9vxtCdNlSkxHcZovOtjNGjMflS9kCKQbaCFTxt8wIxhDt0J+jHUPukAW8mFOCLC5lA9bYsh2wTU/OqEDfPz2e2+y+TFQzx+6iy3YI0uC+DHcHVBM1KfsbTL5ogLCaDkdNT1Sc8J8UEH44OyVSw0I/4oE/QxqQPkZCiANOD9HwbWGBB9S4C/riQsNKX4FZOVrBWcNKb6ogZzjgBTypiHJj0nN0VLFSUOaD6aKDtxVOw0Efhw+ACemF5gGCj/mHJV14Nhj6wDlw5wQRo1IarD4tRa0xIidOJbKR2oHjRaulsgXcNkSK5oOnVmS3yCunPDS0VL4MYYMsgXh4tcS+JFxw8wHV782yY8Jx2NdDUb9froBQAV0dPPMV+ATTZSBfwunXSJlmMFS8/jVmrxEFlzEn9PDrzBu5dwSDn2aidQM6dkOSDRD4rnD0NCvxDveyNOw8dN9GjlzNGx8yh56NgXv9KagyepTZrc1a0YfNMdMz0cGT+4zvTT45LVWPdvcPqOPxWmOz3l9svF1ys9g9m13bxhjbnppDg8U+uKBwuxHdIzcOB2qrdm0qg5PLJVuzfF5x/Geov74kehxAhFULEPJg2CVWkUZPhzkFqZPSnxCpLZXj6Wj/uiLrBqMmx+B6b0z7UfhX/nK/y7/ACvsl6TSMherAAAAAElFTkSuQmCC",
@@ -21,7 +21,7 @@
   "connections": [
     {
       "name": "authentication",
-      "description": "secure connection to the data verification proxy",
+      "description": "secure connection to the data verification and io proxy",
       "type": "oauth2",
       "params": {
         "provider": "CUSTOM",
@@ -43,6 +43,28 @@
     }
   ],
   "extensions": [
+    {
+      "name": "My Data IO Extension",
+      "description": "using in data io flow",
+      "template": "DataIO.Version6.DataInputOutput",
+      "actionReferences": [
+        "SearchRecords Action",
+        "GetTypeNames Action",
+        "GetTypeDefinitions Action"
+      ]
+    },
+    {
+      "name": "My Data IO Extension",
+      "description": "using in data io flow",
+      "template": "DataIO.Version6.DataInputOutput",
+      "actionReferences": [
+        "CreateRecord Action",
+        "PatchRecord Action",
+        "SearchRecords Action",
+        "GetTypeNames Action",
+        "GetTypeDefinitions Action"
+      ]
+    },
     {
       "name": "My Bank Account Verification Extension",
       "description": "Verify bank account",
@@ -102,6 +124,78 @@
     }
   ],
   "actions": [
+    {
+      "name": "SearchRecords Action",
+      "description": "something about data io to a proxy",
+      "template": "DataIO.Version6.SearchRecords",
+      "connectionsReference": "authentication",
+      "params": {
+        "uri": "<PROXY_BASE_URL>/api/dataio/searchRecords"
+      }
+    },
+    {
+      "name": "GetTypeNames Action",
+      "description": "something about data io to a proxy",
+      "template": "DataIO.Version6.GetTypeNames",
+      "connectionsReference": "authentication",
+      "params": {
+        "uri": "<PROXY_BASE_URL>/api/dataio/getTypeNames"
+      }
+    },
+    {
+      "name": "GetTypeDefinitions Action",
+      "description": "something about data io to a proxy",
+      "template": "DataIO.Version6.GetTypeDefinitions",
+      "connectionsReference": "authentication",
+      "params": {
+        "uri": "<PROXY_BASE_URL>/api/dataio/getTypeDefinitions"
+      }
+    },
+    {
+      "name": "CreateRecord Action",
+      "description": "something about data io to a proxy",
+      "template": "DataIO.Version6.CreateRecord",
+      "connectionsReference": "authentication",
+      "params": {
+        "uri": "<PROXY_BASE_URL>/api/dataio/createRecord"
+      }
+    },
+    {
+      "name": "PatchRecord Action",
+      "description": "something about data io to a proxy",
+      "template": "DataIO.Version6.PatchRecord",
+      "connectionsReference": "authentication",
+      "params": {
+        "uri": "<PROXY_BASE_URL>/api/dataio/patchRecord"
+      }
+    },
+    {
+      "name": "SearchRecords Action",
+      "description": "something about data io to a proxy",
+      "template": "DataIO.Version6.SearchRecords",
+      "connectionsReference": "authentication",
+      "params": {
+        "uri": "<PROXY_BASE_URL>/api/dataio/searchRecords"
+      }
+    },
+    {
+      "name": "GetTypeNames Action",
+      "description": "something about data io to a proxy",
+      "template": "DataIO.Version6.GetTypeNames",
+      "connectionsReference": "authentication",
+      "params": {
+        "uri": "<PROXY_BASE_URL>/api/dataio/getTypeNames"
+      }
+    },
+    {
+      "name": "GetTypeDefinitions Action",
+      "description": "something about data io to a proxy",
+      "template": "DataIO.Version6.GetTypeDefinitions",
+      "connectionsReference": "authentication",
+      "params": {
+        "uri": "<PROXY_BASE_URL>/api/dataio/getTypeDefinitions"
+      }
+    },
     {
       "name": "My Bank Account Owner Verification Action",
       "description": "Verify bank account owner with a proxy",
