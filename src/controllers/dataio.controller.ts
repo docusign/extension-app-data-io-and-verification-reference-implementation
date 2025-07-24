@@ -1,11 +1,11 @@
 import { Router } from 'express';
 
 import Paths from '../constants/paths';
-import { createRecord, getTypeDefinitions, getTypeNames, patchRecord, searchRecords } from 'src/services/dataio.service';
+import { createRecord, getTypeDefinitions, getTypeNames, patchRecord, searchRecords } from '../services/dataio.service';
 import { expressjwt as jwt } from 'express-jwt';
 import { checkSchema } from 'express-validator';
-import { dataIOCreateRecordBody, dataIOGetTypeDefinitionsRecordBody, dataIOGetTypeNamesRecordBody, dataIOPatchRecordBody, dataIOSearchRecordsBody } from 'src/validationSchemas/dataio';
-import checkValidationErrors from 'src/middleware/checkValidationErrors';
+import { dataIOCreateRecordBody, dataIOGetTypeDefinitionsRecordBody, dataIOGetTypeNamesRecordBody, dataIOPatchRecordBody, dataIOSearchRecordsBody } from '../validationSchemas/dataio';
+import checkValidationErrors from '../middleware/checkValidationErrors';
 import env from '../env';
 
 const dataIORouter = Router();
