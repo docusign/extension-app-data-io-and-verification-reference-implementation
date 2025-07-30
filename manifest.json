@@ -1,5 +1,5 @@
 {
-  "name": "Connected Fields, data verification and read app",
+  "name": "Combined app",
   "description": {
     "short": "App for data verification and io and Connected Fields",
     "long": "This app is designed to allow for users to verify different kinds of data fields with the database values, use data io extensions and use connected fields extensions"
@@ -51,16 +51,6 @@
         "My Verify Action",
         "My GetTypeNames Action",
         "My GetTypeDefinitions Action"
-      ]
-    },
-    {
-      "name": "My Data IO Extension",
-      "description": "using in data io flow",
-      "template": "DataIO.Version6.DataInputOutput",
-      "actionReferences": [
-        "SearchRecords Action",
-        "GetTypeNames Action",
-        "GetTypeDefinitions Action"
       ]
     },
     {
@@ -162,24 +152,6 @@
       }
     },
     {
-      "name": "SearchRecords Action",
-      "description": "something about data io to a proxy",
-      "template": "DataIO.Version6.SearchRecords",
-      "connectionsReference": "authentication",
-      "params": {
-        "uri": "<PROXY_BASE_URL>/api/dataio/searchRecords"
-      }
-    },
-    {
-      "name": "GetTypeNames Action",
-      "description": "something about data io to a proxy",
-      "template": "DataIO.Version6.GetTypeNames",
-      "connectionsReference": "authentication",
-      "params": {
-        "uri": "<PROXY_BASE_URL>/api/dataio/getTypeNames"
-      }
-    },
-    {
       "name": "GetTypeDefinitions Action",
       "description": "something about data io to a proxy",
       "template": "DataIO.Version6.GetTypeDefinitions",
@@ -222,15 +194,6 @@
       "connectionsReference": "authentication",
       "params": {
         "uri": "<PROXY_BASE_URL>/api/dataio/getTypeNames"
-      }
-    },
-    {
-      "name": "GetTypeDefinitions Action",
-      "description": "something about data io to a proxy",
-      "template": "DataIO.Version6.GetTypeDefinitions",
-      "connectionsReference": "authentication",
-      "params": {
-        "uri": "<PROXY_BASE_URL>/api/dataio/getTypeDefinitions"
       }
     },
     {
