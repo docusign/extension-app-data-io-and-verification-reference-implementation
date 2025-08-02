@@ -1,18 +1,19 @@
-data "aws_region" "current" {
-  count = var.region == null ? 1 : 0
+data "azurerm_subscription" "current" {
+  count = var.subscription_id == null ? 1 : 0
 }
-data "aws_caller_identity" "current" {}
-data "aws_ecr_authorization_token" "current" {}
 
 locals {
-  region = coalesce(var.region, one(data.aws_region.current[*].name))
+  subscription_id = coalesce(var.subscription_id, one(data.azurerm_subscription.current[*].subscription_id))
 
   application_jwt_secret_key      = coalesce(var.application_jwt_secret_key, one(module.generate_jwt_secret_key[*].random_bytes))
   application_oauth_client_id     = coalesce(var.application_oauth_client_id, one(module.generate_oauth_client_id[*].random_bytes))
   application_oauth_client_secret = coalesce(var.application_oauth_client_secret, one(module.generate_oauth_client_secret[*].random_bytes))
   application_authorization_code  = coalesce(var.application_authorization_code, one(module.generate_authorization_code[*].random_bytes))
 
-  file_path_separator = "/"
+  resource_name_separator    = "-"
+  file_path_separator        = "/"
+  docker_registry_separator  = "/"
+  docker_image_tag_separator = ":"
 
   output_manifest_files_directory = abspath(join(local.file_path_separator, compact([path.cwd, var.output_manifest_files_directory])))
   output_manifest_files_paths     = module.manifest[*].output_file_path

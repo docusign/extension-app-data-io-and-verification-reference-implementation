@@ -1,27 +1,41 @@
-# Terraform configuration for deploying to Amazon Web Services (AWS)
+# Terraform configuration for deploying to Microsoft Azure
 
 ## Specific Cloud Prerequisites
 
-Before deploying your extension app on AWS, complete the following setup steps:
+Before deploying your extension app on Azure, complete the following setup steps:
 
-1. [Sign up for a free AWS account](https://aws.amazon.com/free/?all-free-tier.sort-by=item.additionalFields.SortRank&all-free-tier.sort-order=asc&awsf.Free%20Tier%20Types=*all&awsf.Free%20Tier%20Categories=*all) (if you don’t already have one).
+1. [Sign up for an Azure Free Account](https://azure.microsoft.com/free/) (if you don’t already have one).
 
-1. [Create an IAM user](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_users_create.html) with programmatic access and generate an access key (access key ID and secret access key).
+1. **Configure Azure CLI**: Install and configure the Azure CLI to interact with your Azure account. You can follow the instructions [here](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli).
 
-1. [Install the AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html#getting-started-install-instructions) to interact with AWS services from the command line.
-
-1. **Configure AWS CLI**: Configure the AWS CLI to interact with your AWS account. You can follow the instructions [here](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-quickstart.html).
-* Run the following command in your terminal and follow the prompts:
+1. **Authenticate Azure CLI**: Log in to your Azure account using the Azure CLI:
     ```sh
-    aws configure
+    az login
     ```
-* Enter your AWS access key ID and AWS secret access key (generated from your IAM user).
-* Specify your default AWS region (e.g., `us-east-1`, `us-west-2`).
-* Set the default output format (`json`, `text`, or `table—json` is recommended).
 
-In that case `aws` Terraform provider is authenticated to AWS using [shared configuration and credentials files](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#shared-configuration-and-credentials-files), but you may use other methods for [authenticating to AWS](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#authentication-and-configuration).
+1. **Set Subscription**: Set the Azure subscription you want to use:
+    ```sh
+    az account set --subscription "your-subscription-id"
+    ```
+    It's also necessary to set the Azure subscription when running the `azurerm` Terraform provider with version 4.0 or above. This can be done by specifying the `subscription_id` Terraform variable or by exporting the `ARM_SUBSCRIPTION_ID` environment variable. For instance,
+    ```sh
+    export ARM_SUBSCRIPTION_ID="your-subscription-id"
+    ```
 
-Now that you’ve set up your AWS environment, continue with the [Terraform deployment guide](../README.md) to provision your infrastructure.
+1. Make sure you have the correct permissions
+    Terraform needs sufficient permissions to create resources. Make sure your Azure user has the Contributor role:
+    ```sh
+    az role assignment list --assignee <your-email> --output table
+    ```
+    If needed, assign the correct role:
+    ```sh
+    az role assignment create --assignee <your-email> --role "Contributor" --scope "/subscriptions/your-subscription-id"
+    ```
+
+
+In that case `azurerm` Terraform provider is [authenticated to Azure using the Azure CLI](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/guides/azure_cli), but you may use other methods for [authenticating to Azure](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs#authenticating-to-azure).
+
+Now that you’ve set up your Azure environment, continue with the [Terraform deployment guide](../README.md) to provision your infrastructure.
 
 <!-- BEGIN_TF_DOCS -->
 ## Requirements
@@ -29,7 +43,7 @@ Now that you’ve set up your AWS environment, continue with the [Terraform depl
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.0.0, < 2.0.0 |
-| <a name="requirement_aws"></a> [aws](#requirement\_aws) | ~> 5.0 |
+| <a name="requirement_azurerm"></a> [azurerm](#requirement\_azurerm) | ~> 4.16 |
 | <a name="requirement_docker"></a> [docker](#requirement\_docker) | ~> 3.0 |
 | <a name="requirement_local"></a> [local](#requirement\_local) | ~> 2.5 |
 | <a name="requirement_random"></a> [random](#requirement\_random) | ~> 3.6 |
@@ -39,8 +53,9 @@ Now that you’ve set up your AWS environment, continue with the [Terraform depl
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | ~> 5.0 |
-| <a name="provider_time"></a> [time](#provider\_time) | ~> 0.12 |
+| <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | 4.37.0 |
+| <a name="provider_random"></a> [random](#provider\_random) | 3.7.2 |
+| <a name="provider_terraform"></a> [terraform](#provider\_terraform) | n/a |
 
 ## Modules
 
@@ -57,19 +72,16 @@ Now that you’ve set up your AWS environment, continue with the [Terraform depl
 
 | Name | Type |
 |------|------|
-| [aws_apprunner_service.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/apprunner_service) | resource |
-| [aws_ecr_repository.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ecr_repository) | resource |
-| [aws_ecr_repository_policy.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ecr_repository_policy) | resource |
-| [aws_iam_role.access](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role) | resource |
-| [aws_iam_role.instance](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role) | resource |
-| [aws_iam_role_policy_attachment.apprunner](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment) | resource |
-| [time_sleep.access_iam_role_propagation](https://registry.terraform.io/providers/hashicorp/time/latest/docs/resources/sleep) | resource |
-| [aws_caller_identity.current](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/caller_identity) | data source |
-| [aws_ecr_authorization_token.current](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/ecr_authorization_token) | data source |
-| [aws_iam_policy_document.app_role_assume_role_policy](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document) | data source |
-| [aws_iam_policy_document.apprunner](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document) | data source |
-| [aws_iam_policy_document.ecr](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document) | data source |
-| [aws_region.current](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/region) | data source |
+| [azurerm_container_registry.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/container_registry) | resource |
+| [azurerm_linux_web_app.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/linux_web_app) | resource |
+| [azurerm_resource_group.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/resource_group) | resource |
+| [azurerm_role_assignment.pull_image](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/role_assignment) | resource |
+| [azurerm_service_plan.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/service_plan) | resource |
+| [random_id.container_registry](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/id) | resource |
+| [random_id.web_app](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/id) | resource |
+| [terraform_data.login_container_registry](https://registry.terraform.io/providers/hashicorp/terraform/latest/docs/resources/data) | resource |
+| [terraform_data.push_docker_image](https://registry.terraform.io/providers/hashicorp/terraform/latest/docs/resources/data) | resource |
+| [azurerm_subscription.current](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/subscription) | data source |
 
 ## Inputs
 
@@ -82,22 +94,29 @@ Now that you’ve set up your AWS environment, continue with the [Terraform depl
 | <a name="input_application_build_labels"></a> [application\_build\_labels](#input\_application\_build\_labels) | The labels to apply to the application build image | `map(string)` | <pre>{<br/>  "org.opencontainers.image.authors": "DocuSign Inc.",<br/>  "org.opencontainers.image.description": "This reference implementation models seven data verification use cases: bank account owner verification, bank account verification, business FEIN verification, email address verification, phone verification, SSN verification, postal address verification.",<br/>  "org.opencontainers.image.licenses": "MIT",<br/>  "org.opencontainers.image.source": "https://github.com/docusign/extension-app-data-verification-reference-implementation-private",<br/>  "org.opencontainers.image.title": "Data Verification Extension App Reference Implementation",<br/>  "org.opencontainers.image.vendor": "DocuSign Inc."<br/>}</pre> | no |
 | <a name="input_application_build_paths"></a> [application\_build\_paths](#input\_application\_build\_paths) | Paths of files relative to the build context, changes to which lead to a rebuild of the image. Supported pattern matches are the same as for the `fileset` Terraform function (https://developer.hashicorp.com/terraform/language/functions/fileset). | `list(string)` | <pre>[<br/>  "public/**",<br/>  "src/**",<br/>  "views/**",<br/>  "package.json",<br/>  "tsconfig.json",<br/>  "Dockerfile",<br/>  ".dockerignore"<br/>]</pre> | no |
 | <a name="input_application_environment_mode"></a> [application\_environment\_mode](#input\_application\_environment\_mode) | The environment mode for the application | `string` | `"production"` | no |
-| <a name="input_application_instance_cpu"></a> [application\_instance\_cpu](#input\_application\_instance\_cpu) | The number of CPU units to allocate to the application instance | `string` | `"256"` | no |
-| <a name="input_application_instance_memory"></a> [application\_instance\_memory](#input\_application\_instance\_memory) | The amount of memory to allocate to the application instance | `string` | `"512"` | no |
 | <a name="input_application_jwt_secret_key"></a> [application\_jwt\_secret\_key](#input\_application\_jwt\_secret\_key) | The secret key to use for signing JWT tokens. If empty, a random key will be generated. | `string` | `""` | no |
 | <a name="input_application_name"></a> [application\_name](#input\_application\_name) | The name of the application | `string` | `"extension-app-data-verification"` | no |
 | <a name="input_application_oauth_client_id"></a> [application\_oauth\_client\_id](#input\_application\_oauth\_client\_id) | The OAuth client ID for the application. If empty, a random client ID will be generated. | `string` | `""` | no |
 | <a name="input_application_oauth_client_secret"></a> [application\_oauth\_client\_secret](#input\_application\_oauth\_client\_secret) | The OAuth client secret for the application. If empty, a random client secret will be generated. | `string` | `""` | no |
 | <a name="input_application_port"></a> [application\_port](#input\_application\_port) | The port the application listens on | `number` | `3000` | no |
+| <a name="input_application_service_plan_name"></a> [application\_service\_plan\_name](#input\_application\_service\_plan\_name) | The name of the application service plan. If it is not defined, the prefixed application name will be used | `string` | `null` | no |
+| <a name="input_application_service_plan_sku_name"></a> [application\_service\_plan\_sku\_name](#input\_application\_service\_plan\_sku\_name) | The SKU name of the application service plan | `string` | `"F1"` | no |
+| <a name="input_application_service_plan_worker_count"></a> [application\_service\_plan\_worker\_count](#input\_application\_service\_plan\_worker\_count) | The number of workers to allocate for the application service plan | `number` | `1` | no |
+| <a name="input_application_webapp_name"></a> [application\_webapp\_name](#input\_application\_webapp\_name) | The name of the application web app. If it is not defined, the prefixed application name will be used | `string` | `null` | no |
+| <a name="input_container_registry_name"></a> [container\_registry\_name](#input\_container\_registry\_name) | The name of the container registry. If it is not defined, the prefixed application name will be used | `string` | `null` | no |
+| <a name="input_container_registry_sku"></a> [container\_registry\_sku](#input\_container\_registry\_sku) | The SKU of the container registry | `string` | `"Basic"` | no |
 | <a name="input_container_tool"></a> [container\_tool](#input\_container\_tool) | The container tool to use for building and pushing images | `string` | `"docker"` | no |
-| <a name="input_do_force_delete_repository"></a> [do\_force\_delete\_repository](#input\_do\_force\_delete\_repository) | Whether to delete the ECR repository even if it contains images | `bool` | `true` | no |
-| <a name="input_do_scan_images"></a> [do\_scan\_images](#input\_do\_scan\_images) | Whether images are scanned after being pushed to the ECR repository | `bool` | `true` | no |
+| <a name="input_do_enable_admin_access"></a> [do\_enable\_admin\_access](#input\_do\_enable\_admin\_access) | Whether to enable admin access to the container registry | `bool` | `true` | no |
+| <a name="input_do_randomize_resource_names"></a> [do\_randomize\_resource\_names](#input\_do\_randomize\_resource\_names) | Whether to randomize the resource names that should be globally unique | `bool` | `true` | no |
 | <a name="input_docker_host"></a> [docker\_host](#input\_docker\_host) | The Docker host (e.g. 'tcp://127.0.0.1:2376' or 'unix:///var/run/docker.sock') to connect to. If empty, the default Docker host will be used | `string` | `null` | no |
-| <a name="input_manifest_files_paths"></a> [manifest\_files\_paths](#input\_manifest\_files\_paths) | The list of manifest files relative paths to generate | `list(string)` | <pre>[<br/>  "../../manifests/authorizationCode/bankAccountOwnerVerification.manifest.json",<br/>  "../../manifests/authorizationCode/bankAccountVerification.manifest.json",<br/>  "../../manifests/authorizationCode/businessFeinVerification.manifest.json",<br/>  "../../manifests/authorizationCode/emailVerification.manifest.json",<br/>  "../../manifests/authorizationCode/phoneVerification.manifest.json",<br/>  "../../manifests/authorizationCode/postalAddressVerification.manifest.json",<br/>  "../../manifests/authorizationCode/ssnVerification.manifest.json",<br/>  "../../manifests/clientCredentials/bankAccountOwnerVerification.manifest.json",<br/>  "../../manifests/clientCredentials/bankAccountVerification.manifest.json",<br/>  "../../manifests/clientCredentials/businessFeinVerification.manifest.json",<br/>  "../../manifests/clientCredentials/emailVerification.manifest.json",<br/>  "../../manifests/clientCredentials/phoneVerification.manifest.json",<br/>  "../../manifests/clientCredentials/postalAddressVerification.manifest.json",<br/>  "../../manifests/clientCredentials/ssnVerification.manifest.json"<br/>]</pre> | no |
+| <a name="input_is_application_webapp_always_on"></a> [is\_application\_webapp\_always\_on](#input\_is\_application\_webapp\_always\_on) | Whether the application web app should always be on | `bool` | `false` | no |
+| <a name="input_location"></a> [location](#input\_location) | The location/region where the resources will be created | `string` | `"West Europe"` | no |
+| <a name="input_manifest_files_paths"></a> [manifest\_files\_paths](#input\_manifest\_files\_paths) | The list of manifest files relative paths to generate | `list(string)` | <pre>[<br/>  "../../manifest.json"<br/>]</pre> | no |
 | <a name="input_output_manifest_files_directory"></a> [output\_manifest\_files\_directory](#input\_output\_manifest\_files\_directory) | The directory to output the generated manifest files | `string` | `".terraform"` | no |
-| <a name="input_region"></a> [region](#input\_region) | The AWS region | `string` | `"us-east-1"` | no |
-| <a name="input_repository_image_tag_mutability"></a> [repository\_image\_tag\_mutability](#input\_repository\_image\_tag\_mutability) | The image tag mutability setting for the ECR repository | `string` | `"MUTABLE"` | no |
+| <a name="input_resource_group_name"></a> [resource\_group\_name](#input\_resource\_group\_name) | The name of the resource group. If it is not defined, the prefixed application name will be used | `string` | `null` | no |
+| <a name="input_subscription_id"></a> [subscription\_id](#input\_subscription\_id) | The Azure subscription ID | `string` | `null` | no |
 | <a name="input_tags"></a> [tags](#input\_tags) | A map of the tags to apply to various resources | `map(string)` | `{}` | no |
+| <a name="input_tenant_id"></a> [tenant\_id](#input\_tenant\_id) | The Azure tenant ID | `string` | `null` | no |
 
 ## Outputs
 
