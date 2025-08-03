@@ -193,10 +193,10 @@ Request bodies much match the appropriate [action contract](https://developers.d
 
   ```
   {
-    "ssn": "111-11-1111",
-    "firstName": "Nora",
-    "lastName": "Bentley",
-    "dateOfBirth": "1975-09-08"
+  	"socialSecurityNumber": "123-45-6789",
+  	"firstName": "Francis",
+  	"lastName": "Beagle",
+  	"dateOfBirth": "2015-10-09"
   }
   ```
 
@@ -304,7 +304,7 @@ Running the Verify test with the example request body above should return the fo
 
 ### **Data IO**
 
-**Note:** These instructions only apply if you use the [mock data](https://github.com/docusign/extension-app-data-io-reference-implementation/blob/main/src/db/fileDB.ts) in the reference implementation. If you use your own database, you’ll need to construct your requests based on your own schema. Queries for extension tests in the Developer Console are built using [IQuery](https://developers.docusign.com/extension-apps/extension-app-reference/extension-contracts/custom-query-language/) structure. 
+**Note:** These instructions only apply if you use the [mock data](https://github.com/docusign/extension-app-data-io-reference-implementation/blob/main/src/db/fileDB.ts) in the reference implementation. If you use your own database, you’ll need to construct your requests based on your own schema. Queries for extension tests in the Developer Console are built using [IQuery](https://developers.docusign.com/extension-apps/extension-app-reference/extension-contracts/custom-query-language/) structure.
 
 
 #### CreateRecord extension test
@@ -317,7 +317,7 @@ To begin the extension test process, run the CreateRecord test using the sample 
   "data": {
     "Name": "Test Account",
     "ShippingLatitude": 10,
-    "PushCount": 6      
+    "PushCount": 6
   }
 }
 ```
@@ -410,7 +410,7 @@ Running the test should return the response `"success": true`.
 
 ![PatchRecord test](https://github.com/user-attachments/assets/e445b06b-6790-475a-8434-c0eea1e003b3)
 
-Rerun the SearchRecords extension test to search for the new patched values. 
+Rerun the SearchRecords extension test to search for the new patched values.
 
 **Input query:**
 
@@ -454,6 +454,6 @@ Rerun the SearchRecords extension test to search for the new patched values.
 ![Results of SearchRecords after PatchRecord](https://github.com/user-attachments/assets/70dbce23-0c9d-4150-ab25-c853e92d695f)
 
 
-Alternatively, the `Account.json` file will contain the updated records. 
+Alternatively, the `Account.json` file will contain the updated records.
 
 ![Account.json after PatchRecord test](https://github.com/user-attachments/assets/ace8276b-2d36-4171-a598-2450e6d9b5fe)
