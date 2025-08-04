@@ -28,7 +28,7 @@ variable "application_name" {
   description = "The name of the application"
   type        = string
   nullable    = false
-  default     = "extension-app-data-verification"
+  default     = "extension-app-data-io-verification"
 
   validation {
     condition     = can(regex("^[a-zA-Z0-9-]+$", var.application_name)) && length(var.application_name) <= 32
@@ -96,7 +96,7 @@ variable "application_build_labels" {
   default = {
     "org.opencontainers.image.title"       = "Data Verification Extension App Reference Implementation"
     "org.opencontainers.image.description" = "This reference implementation models seven data verification use cases: bank account owner verification, bank account verification, business FEIN verification, email address verification, phone verification, SSN verification, postal address verification."
-    "org.opencontainers.image.source"      = "https://github.com/docusign/extension-app-data-verification-reference-implementation-private"
+    "org.opencontainers.image.source"      = "https://github.com/docusign/extension-app-data-io-and-verification-reference-implementation-private"
     "org.opencontainers.image.licenses"    = "MIT"
     "org.opencontainers.image.authors"     = "DocuSign Inc."
     "org.opencontainers.image.vendor"      = "DocuSign Inc."
@@ -195,20 +195,7 @@ variable "manifest_files_paths" {
   description = "The list of manifest files relative paths to generate"
   type        = list(string)
   default = [
-    "../../manifests/authorizationCode/bankAccountOwnerVerification.manifest.json",
-    "../../manifests/authorizationCode/bankAccountVerification.manifest.json",
-    "../../manifests/authorizationCode/businessFeinVerification.manifest.json",
-    "../../manifests/authorizationCode/emailVerification.manifest.json",
-    "../../manifests/authorizationCode/phoneVerification.manifest.json",
-    "../../manifests/authorizationCode/postalAddressVerification.manifest.json",
-    "../../manifests/authorizationCode/ssnVerification.manifest.json",
-    "../../manifests/clientCredentials/bankAccountOwnerVerification.manifest.json",
-    "../../manifests/clientCredentials/bankAccountVerification.manifest.json",
-    "../../manifests/clientCredentials/businessFeinVerification.manifest.json",
-    "../../manifests/clientCredentials/emailVerification.manifest.json",
-    "../../manifests/clientCredentials/phoneVerification.manifest.json",
-    "../../manifests/clientCredentials/postalAddressVerification.manifest.json",
-    "../../manifests/clientCredentials/ssnVerification.manifest.json"
+    "../../manifest.json"
   ]
 }
 
