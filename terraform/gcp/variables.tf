@@ -51,8 +51,8 @@ variable "application_name" {
   default     = "extension-app-data-io-verification"
 
   validation {
-    condition     = can(regex("^[a-zA-Z0-9-]+$", var.application_name)) && length(var.application_name) <= 32
-    error_message = "The application name must contain only alphanumeric characters and hyphens and be at most 32 characters long"
+    condition     = can(regex("^[a-zA-Z0-9-]+$", var.application_name)) && length(var.application_name) <= 37
+    error_message = "The application name must contain only alphanumeric characters and hyphens and be at most 37 characters long"
   }
 }
 
