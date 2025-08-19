@@ -193,10 +193,10 @@ Request bodies much match the appropriate [action contract](https://developers.d
 
   ```
   {
-  	"socialSecurityNumber": "123-45-6789",
-  	"firstName": "Francis",
-  	"lastName": "Beagle",
-  	"dateOfBirth": "2015-10-09"
+    "socialSecurityNumber": "111-11-1111",
+    "firstName": "Nora",
+    "lastName": "Bentley",
+    "dateOfBirth": "1975-09-08"
   }
   ```
 
