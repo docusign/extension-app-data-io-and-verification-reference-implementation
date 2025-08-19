@@ -1,6 +1,9 @@
 import { EmailBody, EmailResponse } from '../models/dataVerification';
-import { SAMPLE_EMAIL_DATABASE } from '../constants/sampleData';
+import { FileDB } from '../db/fileDB';
 import { IReq, IRes } from '../utils/types';
+import { generateFilePath } from './dataio.service';
+import { QueryExecutor } from '../utils/queryExecutor';
+import { constructSearchQuery } from '../utils/dataVerification';
 
 export const verifyEmail = (req: IReq<EmailBody>, res: IRes) => {
   const {
@@ -17,8 +20,13 @@ export const verifyEmail = (req: IReq<EmailBody>, res: IRes) => {
     }
 
     // Check if the email exists in the database
-    const emailFound = SAMPLE_EMAIL_DATABASE.find(person => person.email === email);
-    if (!emailFound) {
+    const attribute = 'email';
+    const from = 'Contact';
+    const query = constructSearchQuery(attribute, from, email);
+    const db: FileDB = new FileDB(generateFilePath(from));
+    const data: object[] = db.readFile();
+    const emailFound = QueryExecutor.execute(query, data);
+    if (emailFound === -1) {
         throw new Error("No match found for provided email details");
     }
 

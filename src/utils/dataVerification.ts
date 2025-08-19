@@ -1,3 +1,4 @@
+import { IQuery, OperandType, Operator } from '../models/IQuery';
 import VehicleDatabase from '../db/vehicleDatabase';
 import { VerifyResponse } from '../models/connectedfields';
 
@@ -208,6 +209,33 @@ export const verifyVehicleIdentification = (data: any, vehicleDb: VehicleDatabas
   }
 
   return generateResult(errors, 'Vehicle identification verification completed.');
+};
+
+export const constructSearchQuery = (attribute: string, from: string, value: string): IQuery => {
+  return {
+    $class: 'com.docusign.connected.data.queries@1.0.0.Query',
+    attributesToSelect: [attribute],
+    from: from,
+    queryFilter: {
+      $class: 'com.docusign.connected.data.queries@1.0.0.QueryFilter',
+      operation: {
+        $class: 'com.docusign.connected.data.queries@1.0.0.ComparisonOperation',
+        leftOperand: {
+          $class: 'com.docusign.connected.data.queries@1.0.0.Operand',
+          name: attribute,
+          type: OperandType.STRING,
+          isLiteral: false,
+        },
+        operator: Operator.EQUALS,
+        rightOperand: {
+          $class: 'com.docusign.connected.data.queries@1.0.0.Operand',
+          name: value,
+          type: OperandType.STRING,
+          isLiteral: true,
+        },
+      },
+    },
+  };
 };
 
 const generateResult = (errors: string[], successMessage: string): VerifyResponse => {

@@ -7,23 +7,11 @@ const paths = {
     Verify: {
       Post: '/verify',
     },
-    GetTypeNames: {
-      Post: '/getTypeNames',
-    },
-    GetTypeDefinitions: {
-      Post: '/getTypeDefinitions',
-    }
   },
   DataIO: {
     Base: '/dataio',
     CreateRecord: {
       Post: '/createRecord',
-    },
-    PatchRecord: {
-      Post: '/patchRecord',
-    },
-    SearchRecords: {
-      Post: '/searchRecords',
     },
     GetTypeNames: {
       Post: '/getTypeNames',
@@ -34,29 +22,8 @@ const paths = {
   },
   Verify: {
     Base: "/verify",
-    BankAccountOwner: {
-      Post: "/bankAccountOwner",
-    },
-    BankAccount: {
-      Post: "/bankAccount",
-    },
     Email: {
       Post: "/email",
-    },
-    BusinessFEIN: {
-      Post: "/businessFEIN",
-    },
-    PhoneNumber: {
-      Post: "/phone",
-    },
-    SSN: {
-      Post: "/ssn",
-    },
-    PostalAddress: {
-      Post: "/postalAddress",
-    },
-    TypeaheadAddress: {
-      Post: "/typeaheadAddress",
     },
   },
   Auth: {

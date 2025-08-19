@@ -48,9 +48,7 @@
       "description": "Used to verify and autofill agreements with custom data models",
       "template": "ConnectedFields.Version1.ConnectedFields",
       "actionReferences": [
-        "My Verify Action",
-        "My GetTypeNames Action",
-        "My GetTypeDefinitions Action"
+        "My Verify Action"
       ]
     },
     {
@@ -59,26 +57,8 @@
       "template": "DataIO.Version6.DataInputOutput",
       "actionReferences": [
         "CreateRecord Action",
-        "PatchRecord Action",
-        "SearchRecords Action",
         "GetTypeNames Action",
         "GetTypeDefinitions Action"
-      ]
-    },
-    {
-      "name": "My Bank Account Verification Extension",
-      "description": "Verify bank account",
-      "template": "Verify.Version3.BankAccount",
-      "actionReferences": [
-        "My Bank Account Verification Action"
-      ]
-    },
-    {
-      "name": "My Business FEIN Verification Extension",
-      "description": "Verify business FEIN",
-      "template": "Verify.Version1.BusinessEntity",
-      "actionReferences": [
-        "My Business FEIN Verification Action"
       ]
     },
     {
@@ -87,39 +67,6 @@
       "template": "Verify.Version1.Email",
       "actionReferences": [
         "My Email Verification Action"
-      ]
-    },
-    {
-      "name": "My Phone Verification Extension",
-      "description": "Verify phone number",
-      "template": "Verify.Version1.PhoneNumber",
-      "actionReferences": [
-        "My Phone Verification Action"
-      ]
-    },
-    {
-      "name": "My Postal Address Verification Extension",
-      "description": "Verify postal address",
-      "template": "Verify.Version1.PostalAddress",
-      "actionReferences": [
-        "postal-address-verify",
-        "postal-address-suggestion"
-      ]
-    },
-    {
-      "name": "My SSN Verification Extension",
-      "description": "Verify SSN",
-      "template": "Verify.Version2.SocialSecurityNumber",
-      "actionReferences": [
-        "My SSN Verification Action"
-      ]
-    },
-    {
-      "name": "My Bank Account Owner Verification Extension",
-      "description": "Verify bank account owner",
-      "template": "Verify.Version1.BankAccountOwner",
-      "actionReferences": [
-        "My Bank Account Owner Verification Action"
       ]
     }
   ],
@@ -134,57 +81,12 @@
       }
     },
     {
-      "name": "My GetTypeNames Action",
-      "description": "This is a description of my GetTypeNames action",
-      "template": "DataIO.Version6.GetTypeNames",
-      "connectionsReference": "authentication",
-      "params": {
-        "uri": "<PROXY_BASE_URL>/api/connectedfields/getTypeNames"
-      }
-    },
-    {
-      "name": "My GetTypeDefinitions Action",
-      "description": "This is a description of my GetTypeDefinitions action",
-      "template": "DataIO.Version6.GetTypeDefinitions",
-      "connectionsReference": "authentication",
-      "params": {
-        "uri": "<PROXY_BASE_URL>/api/connectedfields/getTypeDefinitions"
-      }
-    },
-    {
-      "name": "GetTypeDefinitions Action",
-      "description": "something about data io to a proxy",
-      "template": "DataIO.Version6.GetTypeDefinitions",
-      "connectionsReference": "authentication",
-      "params": {
-        "uri": "<PROXY_BASE_URL>/api/dataio/getTypeDefinitions"
-      }
-    },
-    {
       "name": "CreateRecord Action",
       "description": "something about data io to a proxy",
       "template": "DataIO.Version6.CreateRecord",
       "connectionsReference": "authentication",
       "params": {
         "uri": "<PROXY_BASE_URL>/api/dataio/createRecord"
-      }
-    },
-    {
-      "name": "PatchRecord Action",
-      "description": "something about data io to a proxy",
-      "template": "DataIO.Version6.PatchRecord",
-      "connectionsReference": "authentication",
-      "params": {
-        "uri": "<PROXY_BASE_URL>/api/dataio/patchRecord"
-      }
-    },
-    {
-      "name": "SearchRecords Action",
-      "description": "something about data io to a proxy",
-      "template": "DataIO.Version6.SearchRecords",
-      "connectionsReference": "authentication",
-      "params": {
-        "uri": "<PROXY_BASE_URL>/api/dataio/searchRecords"
       }
     },
     {
@@ -197,30 +99,12 @@
       }
     },
     {
-      "name": "My Bank Account Owner Verification Action",
-      "description": "Verify bank account owner with a proxy",
-      "template": "Verify.Version1.BankAccountOwner",
+      "name": "GetTypeDefinitions Action",
+      "description": "something about data io to a proxy",
+      "template": "DataIO.Version6.GetTypeDefinitions",
       "connectionsReference": "authentication",
       "params": {
-        "uri": "<PROXY_BASE_URL>/api/verify/bankAccountOwner"
-      }
-    },
-    {
-      "name": "My Bank Account Verification Action",
-      "description": "Verify bank account with a proxy",
-      "template": "Verify.Version3.BankAccount",
-      "connectionsReference": "authentication",
-      "params": {
-        "uri": "<PROXY_BASE_URL>/api/verify/bankAccount"
-      }
-    },
-    {
-      "name": "My Business FEIN Verification Action",
-      "description": "Verify business FEIN with a proxy",
-      "template": "Verify.Version1.BusinessEntity",
-      "connectionsReference": "authentication",
-      "params": {
-        "uri": "<PROXY_BASE_URL>/api/verify/businessFEIN"
+        "uri": "<PROXY_BASE_URL>/api/dataio/getTypeDefinitions"
       }
     },
     {
@@ -230,42 +114,6 @@
       "connectionsReference": "authentication",
       "params": {
         "uri": "<PROXY_BASE_URL>/api/verify/email"
-      }
-    },
-    {
-      "name": "My Phone Verification Action",
-      "description": "Verify phone number with a proxy",
-      "template": "Verify.Version1.PhoneNumber",
-      "connectionsReference": "authentication",
-      "params": {
-        "uri": "<PROXY_BASE_URL>/api/verify/phone"
-      }
-    },
-    {
-      "name": "postal-address-verify",
-      "description": "Verify postal address with a proxy",
-      "template": "Verify.Version1.PostalAddress",
-      "connectionsReference": "authentication",
-      "params": {
-        "uri": "<PROXY_BASE_URL>/api/verify/postalAddress"
-      }
-    },
-    {
-      "name": "postal-address-suggestion",
-      "description": "Provide typeahead suggestions and verify postal address with a proxy",
-      "template": "Typeahead.Version1.PostalAddress",
-      "connectionsReference": "authentication",
-      "params": {
-        "uri": "<PROXY_BASE_URL>/api/verify/typeaheadAddress"
-      }
-    },
-    {
-      "name": "My SSN Verification Action",
-      "description": "Verify SSN with a proxy",
-      "template": "Verify.Version2.SocialSecurityNumber",
-      "connectionsReference": "authentication",
-      "params": {
-        "uri": "<PROXY_BASE_URL>/api/verify/ssn"
       }
     }
   ],

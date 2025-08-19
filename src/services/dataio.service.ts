@@ -91,7 +91,7 @@ const convertDateToISO8601 = (data: object, typeName: string): void => {
  * @param typeName the typeName to create a file for
  * @returns {string}
  */
-const generateFilePath = (typeName: string): string => `${typeName}.json`;
+export const generateFilePath = (typeName: string): string => `${typeName}.json`;
 
 /**
  * Checks if the given declaration is a readable concept by checking for a Crud decorator with "Readable".
