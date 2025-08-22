@@ -7,6 +7,12 @@ const paths = {
     Verify: {
       Post: '/verify',
     },
+    GetTypeNames: {
+      Post: '/getTypeNames',
+    },
+    GetTypeDefinitions: {
+      Post: '/getTypeDefinitions',
+    }
   },
   DataIO: {
     Base: '/dataio',

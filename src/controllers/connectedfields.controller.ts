@@ -7,10 +7,34 @@ import checkValidationErrors from '../middleware/checkValidationErrors';
 import env from '../env';
 import {
   connectedFieldsVerifyBody,
+  connectedFieldsGetTypeDefinitionsRecordBody,
+  connectedFieldsGetTypeNamesRecordBody
 } from '../validationSchemas/connectedfields';
-import { verify } from '../services/connectedfields';
+import { verify, getTypeNames, getTypeDefinitions } from '../services/connectedfields';
 
 const connectedFieldsRouter = Router();
+
+connectedFieldsRouter.post(
+  Paths.ConnectedFields.GetTypeNames.Post,
+  jwt({
+    secret: env.JWT_SECRET_KEY,
+    algorithms: ['HS256'],
+  }),
+  checkSchema(connectedFieldsGetTypeNamesRecordBody, ['body']),
+  checkValidationErrors,
+  getTypeNames,
+);
+
+connectedFieldsRouter.post(
+  Paths.ConnectedFields.GetTypeDefinitions.Post,
+  jwt({
+    secret: env.JWT_SECRET_KEY,
+    algorithms: ['HS256'],
+  }),
+  checkSchema(connectedFieldsGetTypeDefinitionsRecordBody, ['body']),
+  checkValidationErrors,
+  getTypeDefinitions,
+);
 
 connectedFieldsRouter.post(
   Paths.ConnectedFields.Verify.Post,

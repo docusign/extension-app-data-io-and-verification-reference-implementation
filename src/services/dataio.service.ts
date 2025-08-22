@@ -248,14 +248,15 @@ export const getTypeDefinitions = (req: IReq<GetTypeDefinitionsBody>, res: IRes)
       typeNames
     },
   } = req;
+
+  const mapDeclarations = (concept: any) => concept.ast;
+
   if (!typeNames) {
     return res.status(400).json(generateErrorResponse(ErrorCode.BAD_REQUEST, 'Missing typeNames in request')).send();
   }
-  MODEL_MANAGER.addCTOModel
   try {
-    return res.json({
-      declarations: READABLE_CONCEPTS.map((concept: ConceptDeclaration) => concept.ast)
-    })
+    const declarations = CONCEPTS.map(mapDeclarations).filter(declaration => typeNames.includes(declaration.name));
+    return res.json({ declarations });
   } catch (err) {
     console.log(`Encountered an error getting type definitions: ${err.message}`);
     return res.status(500).json(generateErrorResponse(ErrorCode.INTERNAL_ERROR, err)).send();

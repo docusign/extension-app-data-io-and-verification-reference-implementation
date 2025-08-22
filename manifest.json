@@ -48,7 +48,9 @@
       "description": "Used to verify and autofill agreements with custom data models",
       "template": "ConnectedFields.Version1.ConnectedFields",
       "actionReferences": [
-        "My Verify Action"
+        "My Verify Action",
+        "Connected Fields GetTypeNames Action",
+        "Connected Fields GetTypeDefinitions Action"
       ]
     },
     {
@@ -78,6 +80,24 @@
       "connectionsReference": "authentication",
       "params": {
         "uri": "<PROXY_BASE_URL>/api/connectedfields/verify"
+      }
+    },
+    {
+      "name": "Connected Fields GetTypeNames Action",
+      "description": "This is a description of my GetTypeNames action",
+      "template": "DataIO.Version6.GetTypeNames",
+      "connectionsReference": "authentication",
+      "params": {
+        "uri": "<PROXY_BASE_URL>/api/connectedfields/getTypeNames"
+      }
+    },
+    {
+      "name": "Connected Fields GetTypeDefinitions Action",
+      "description": "This is a description of my GetTypeDefinitions action",
+      "template": "DataIO.Version6.GetTypeDefinitions",
+      "connectionsReference": "authentication",
+      "params": {
+        "uri": "<PROXY_BASE_URL>/api/connectedfields/getTypeDefinitions"
       }
     },
     {
