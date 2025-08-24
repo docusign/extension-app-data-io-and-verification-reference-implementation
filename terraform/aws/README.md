@@ -30,7 +30,7 @@ Now that you’ve set up your AWS environment, continue with the [Terraform depl
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.0.0, < 2.0.0 |
 | <a name="requirement_aws"></a> [aws](#requirement\_aws) | ~> 5.0 |
-| <a name="requirement_docker"></a> [docker](#requirement\_docker) | ~> 3.0 |
+| <a name="requirement_docker"></a> [docker](#requirement\_docker) | ~> 3.6 |
 | <a name="requirement_local"></a> [local](#requirement\_local) | ~> 2.5 |
 | <a name="requirement_random"></a> [random](#requirement\_random) | ~> 3.6 |
 | <a name="requirement_time"></a> [time](#requirement\_time) | ~> 0.12 |
