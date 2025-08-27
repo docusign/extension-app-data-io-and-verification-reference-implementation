@@ -99,11 +99,7 @@ export const generateFilePath = (typeName: string): string => `${typeName}.json`
  * @returns {boolean} True if the declaration is a readable concept, false otherwise.
  */
 const isReadableConcept = (concept: ConceptDeclaration): boolean => {
-  const crudDecorator = concept.getDecorator(DECORATOR_NAMES.CRUD);
-  if (!crudDecorator) return false;
-
-  const firstArg = crudDecorator.arguments[0] as string | undefined;
-  return firstArg?.includes(CRUD_ARGUMENTS.READABLE) ?? false;
+  return (concept.getDecorator(DECORATOR_NAMES.CRUD)?.arguments[0] || '' as string).includes(CRUD_ARGUMENTS.READABLE);
 };
 
 /**
@@ -124,7 +120,7 @@ const generateErrorResponse = (message: string, code: string): ErrorResponse => 
  * Concerto model manager setup using CTO file.
  * Model manager allowes users to load in CTO files and use Concerto model features directly in code.
  */
-const MODEL_MANAGER: ModelManager = ModelManagerUtil.createModelManagerFromCTO(path.join(__dirname, "../dataModel/model.cto"));
+const MODEL_MANAGER: ModelManager = ModelManagerUtil.createModelManagerFromCTO(path.join(__dirname, "../dataModel/dataIOModel.cto"));
 const CONCEPTS: ConceptDeclaration[] = MODEL_MANAGER.getConceptDeclarations();
 const READABLE_CONCEPTS: ConceptDeclaration[] = CONCEPTS.filter(isReadableConcept);
 
@@ -248,15 +244,14 @@ export const getTypeDefinitions = (req: IReq<GetTypeDefinitionsBody>, res: IRes)
       typeNames
     },
   } = req;
-
-  const mapDeclarations = (concept: any) => concept.ast;
-
   if (!typeNames) {
     return res.status(400).json(generateErrorResponse(ErrorCode.BAD_REQUEST, 'Missing typeNames in request')).send();
   }
+  MODEL_MANAGER.addCTOModel
   try {
-    const declarations = CONCEPTS.map(mapDeclarations).filter(declaration => typeNames.includes(declaration.name));
-    return res.json({ declarations });
+    return res.json({
+      declarations: READABLE_CONCEPTS.map((concept: ConceptDeclaration) => concept.ast)
+    })
   } catch (err) {
     console.log(`Encountered an error getting type definitions: ${err.message}`);
     return res.status(500).json(generateErrorResponse(ErrorCode.INTERNAL_ERROR, err)).send();

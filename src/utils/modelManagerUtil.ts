@@ -12,7 +12,7 @@ export class ModelManagerUtil {
         // Needed as this is a workaround to skip line locations in generated AST
         // @ts-ignore
         const modelManager: ModelManager = new ModelManager({ strict: true, skipLocationNodes: true });
-        modelManager.addCTOModel(fs.readFileSync(path.join(__dirname, "../dataModel/model.cto"),'utf8'));
+        modelManager.addCTOModel(fs.readFileSync(ctoFile, 'utf8'));
         modelManager.validateModelFiles();
         return modelManager
     }

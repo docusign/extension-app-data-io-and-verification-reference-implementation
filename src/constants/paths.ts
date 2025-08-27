@@ -16,6 +16,12 @@ const paths = {
   },
   DataIO: {
     Base: '/dataio',
+    PatchRecord: {
+      Post: '/patchRecord',
+    },
+    SearchRecords: {
+      Post: '/searchRecords',
+    },
     CreateRecord: {
       Post: '/createRecord',
     },

@@ -1,0 +1,17 @@
+namespace org.example@1.0.0
+
+@VerifiableType
+@Term("Contact")
+concept VerifyContactInput {
+    @IsRequiredForVerifyingType
+    @Term("First Name")
+    o String firstName length=[,256]
+
+    @IsRequiredForVerifyingType
+    @Term("Last Name")
+    o String lastName length=[,256]
+    
+    @IsRequiredForVerifyingType
+    @Term("Email")
+    o String email length=[,256]
+}

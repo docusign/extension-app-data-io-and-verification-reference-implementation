@@ -1,32 +1,10 @@
 import { IQuery, OperandType, Operator } from '../models/IQuery';
-import { VerifyResponse } from '../models/connectedfields';
+import { ContactRecord, VerifyResponse } from '../models/connectedfields';
 import { FileDB } from '../db/fileDB';
 import { generateFilePath } from '../services/dataio.service';
 import { QueryExecutor } from './queryExecutor';
 
-export const verifyEmail = (data: any) => {
-  const errors: string[] = [];
-  if (data.email) {
-    const emailRegex = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
-    if (!emailRegex.test(data.email)) {
-      errors.push('Invalid email format. Provide a valid email like user@domain.com.');
-    }
-  }
-
-  const attribute = 'email';
-  const from = 'Contact';
-  const query = constructSearchQuery(attribute, from, data.email);
-  const db: FileDB = new FileDB(generateFilePath(from));
-  const records: object[] = db.readFile();
-  const emailFound = QueryExecutor.execute(query, records);
-  if (emailFound === -1) {
-    errors.push("No match found for provided email");
-  }
-
-  return generateResult(errors, 'Email verification completed.');
-};
-
-export const verifyFullName = (data: any) => {
+export const verifyContact = (data: any) => {
   const errors: string[] = [];
   const nameRegex = /^[\p{L}\p{M}\-'\s]+$/u;
   if (data.firstName) {
@@ -41,18 +19,33 @@ export const verifyFullName = (data: any) => {
     }
   }
 
-  const expectedFullName = `${data.firstName} ${data.lastName}`;
-  const attribute = 'fullName';
-  const from = 'Contact';
-  const query = constructSearchQuery(attribute, from, expectedFullName);
-  const db: FileDB = new FileDB(generateFilePath(from));
-  const records: object[] = db.readFile();
-  const fullNameFound = QueryExecutor.execute(query, records);
-  if (fullNameFound === -1) {
-    errors.push("No match found for provided full name details");
+  if (data.email) {
+    const emailRegex = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
+    if (!emailRegex.test(data.email)) {
+      errors.push('Invalid email format. Provide a valid email like user@domain.com.');
+    }
   }
 
-  return generateResult(errors, 'Full name verification completed.');
+  const attribute = 'email';
+  const from = 'Contact';
+  const query = constructSearchQuery(attribute, from, data.email);
+  const db: FileDB = new FileDB(generateFilePath(from));
+  const records: object[] = db.readFile();
+  const index = QueryExecutor.execute(query, records);
+  if (index === -1) {
+    errors.push('No match found for provided contact details');
+  }
+
+  const contact = records[index] as ContactRecord;
+  if (contact.firstName !== data.firstName) {
+    errors.push('First name does not match the records');
+  }
+
+  if (contact.lastName !== data.lastName) {
+    errors.push('Last name does not match the records');
+  }
+
+  return generateResult(errors, 'Contact verification completed.');
 };
 
 export const constructSearchQuery = (attribute: string, from: string, value: string): IQuery => {

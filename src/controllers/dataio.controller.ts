@@ -1,10 +1,10 @@
 import { Router } from 'express';
 
 import Paths from '../constants/paths';
-import { createRecord, getTypeDefinitions, getTypeNames } from '../services/dataio.service';
+import { createRecord, getTypeDefinitions, getTypeNames, patchRecord, searchRecords } from '../services/dataio.service';
 import { expressjwt as jwt } from 'express-jwt';
 import { checkSchema } from 'express-validator';
-import { dataIOCreateRecordBody, dataIOGetTypeDefinitionsRecordBody, dataIOGetTypeNamesRecordBody } from '../validationSchemas/dataio';
+import { dataIOCreateRecordBody, dataIOGetTypeDefinitionsRecordBody, dataIOGetTypeNamesRecordBody, dataIOPatchRecordBody, dataIOSearchRecordsBody } from '../validationSchemas/dataio';
 import checkValidationErrors from '../middleware/checkValidationErrors';
 import env from '../env';
 
@@ -19,6 +19,28 @@ dataIORouter.post(
   checkSchema(dataIOCreateRecordBody, ['body']),
   checkValidationErrors,
   createRecord,
+);
+
+dataIORouter.post(
+  Paths.DataIO.SearchRecords.Post,
+  jwt({
+    secret: env.JWT_SECRET_KEY,
+    algorithms: ['HS256'],
+  }),
+  checkSchema(dataIOSearchRecordsBody, ['body']),
+  checkValidationErrors,
+  searchRecords,
+);
+
+dataIORouter.post(
+  Paths.DataIO.PatchRecord.Post,
+  jwt({
+    secret: env.JWT_SECRET_KEY,
+    algorithms: ['HS256'],
+  }),
+  checkSchema(dataIOPatchRecordBody, ['body']),
+  checkValidationErrors,
+  patchRecord,
 );
 
 dataIORouter.post(

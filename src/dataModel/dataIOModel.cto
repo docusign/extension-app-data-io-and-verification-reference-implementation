@@ -1,0 +1,21 @@
+namespace org.example@1.0.0
+
+@Term("Contact")
+@Crud("Createable,Readable,Updateable,Deletable")
+concept Contact identified by Id {
+    @Term("Contact ID")
+    @Crud("Readable")
+    o String Id
+
+    @Term("First Name")
+    @Crud("Createable,Readable,Updateable")
+    o String firstName
+
+    @Term("Last Name")
+    @Crud("Createable,Readable,Updateable")
+    o String lastName
+
+    @Term("Email")
+    @Crud("Createable,Readable,Updateable")
+    o String email
+}

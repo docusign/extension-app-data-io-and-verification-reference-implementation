@@ -3,7 +3,7 @@ import { ConceptDeclaration, ModelManager } from '@accordproject/concerto-core';
 import path from 'path';
 import { ModelManagerUtil } from '../utils/modelManagerUtil';
 import { GetTypeDefinitionsBody, GetTypeNamesBody, TypeNameInfo, VerifyBody } from '../models/connectedfields';
-import { verifyEmail, verifyFullName } from '../utils/dataVerification';
+import { verifyContact } from '../utils/dataVerification';
 
 enum DECORATOR_NAMES {
   TERM = 'Term',
@@ -37,7 +37,7 @@ const generateErrorResponse = (message: string, code: string): ErrorResponse => 
  * Concerto model manager setup using CTO file.
  * Model manager allowes users to load in CTO files and use Concerto model features directly in code.
  */
-const MODEL_MANAGER: ModelManager = ModelManagerUtil.createModelManagerFromCTO(path.join(__dirname, '../dataModel/model.cto'));
+const MODEL_MANAGER: ModelManager = ModelManagerUtil.createModelManagerFromCTO(path.join(__dirname, '../dataModel/connectedFieldsModel.cto'));
 const CONCEPTS: ConceptDeclaration[] = MODEL_MANAGER.getConceptDeclarations();
 
 /**
@@ -100,10 +100,8 @@ export const verify = (req: IReq<VerifyBody>, res: IRes): IRes => {
   }
   try {
     switch (typeName) {
-      case 'VerifyEmailInput':
-        return res.status(200).json(verifyEmail(data)).send();
-      case 'VerifyFullNameInput':
-        return res.status(200).json(verifyFullName(data)).send();
+      case 'VerifyContactInput':
+        return res.status(200).json(verifyContact(data)).send();
       default:
         return res
           .status(400)

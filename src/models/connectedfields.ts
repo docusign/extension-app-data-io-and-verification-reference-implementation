@@ -127,3 +127,10 @@ export type VerifyResponse = {
    */
   passthroughResponseData?: object;
 };
+
+export interface ContactRecord {
+  Id: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+}
