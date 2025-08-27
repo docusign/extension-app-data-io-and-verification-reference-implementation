@@ -63,7 +63,7 @@ resource "terraform_data" "login_container_registry" {
   ]
 
   provisioner "local-exec" {
-    command = "${self.input.container_tool} login --username ${self.input.application_service_account_private_key_type} --password ${self.input.application_service_account_private_key} ${self.input.container_registry_url}"
+    command = "gcloud auth configure-docker  ${self.input.container_registry_login_server}"
   }
 
   provisioner "local-exec" {
