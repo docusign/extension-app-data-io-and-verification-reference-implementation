@@ -50,7 +50,7 @@ Now that you’ve set up your Google Cloud environment, continue with the [Terra
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.0.0, < 2.0.0 |
-| <a name="requirement_docker"></a> [docker](#requirement\_docker) | ~> 3.0 |
+| <a name="requirement_docker"></a> [docker](#requirement\_docker) | ~> 3.6 |
 | <a name="requirement_google"></a> [google](#requirement\_google) | ~> 6.16 |
 | <a name="requirement_local"></a> [local](#requirement\_local) | ~> 2.5 |
 | <a name="requirement_random"></a> [random](#requirement\_random) | ~> 3.6 |
@@ -60,7 +60,7 @@ Now that you’ve set up your Google Cloud environment, continue with the [Terra
 
 | Name | Version |
 |------|---------|
-| <a name="provider_google"></a> [google](#provider\_google) | 6.46.0 |
+| <a name="provider_google"></a> [google](#provider\_google) | 6.49.2 |
 | <a name="provider_terraform"></a> [terraform](#provider\_terraform) | n/a |
 | <a name="provider_time"></a> [time](#provider\_time) | 0.13.1 |
 

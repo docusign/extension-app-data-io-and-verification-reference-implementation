@@ -44,7 +44,7 @@ Now that you’ve set up your Azure environment, continue with the [Terraform de
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.0.0, < 2.0.0 |
 | <a name="requirement_azurerm"></a> [azurerm](#requirement\_azurerm) | ~> 4.16 |
-| <a name="requirement_docker"></a> [docker](#requirement\_docker) | ~> 3.0 |
+| <a name="requirement_docker"></a> [docker](#requirement\_docker) | ~> 3.6 |
 | <a name="requirement_local"></a> [local](#requirement\_local) | ~> 2.5 |
 | <a name="requirement_random"></a> [random](#requirement\_random) | ~> 3.6 |
 | <a name="requirement_time"></a> [time](#requirement\_time) | ~> 0.12 |
@@ -53,7 +53,7 @@ Now that you’ve set up your Azure environment, continue with the [Terraform de
 
 | Name | Version |
 |------|---------|
-| <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | 4.37.0 |
+| <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | 4.41.0 |
 | <a name="provider_random"></a> [random](#provider\_random) | 3.7.2 |
 | <a name="provider_terraform"></a> [terraform](#provider\_terraform) | n/a |
 
