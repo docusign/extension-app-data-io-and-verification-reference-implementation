@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "1",
+    "socialSecurityNumber": "123-45-6789",
+    "firstName": "Eliza",
+    "lastName": "Monroe",
+    "dateOfBirth": "2015-10-09",
+    "primaryContact": "1"
+  },
+  {
+    "Id": "2",
+    "socialSecurityNumber": "987-65-4321",
+    "firstName": "Theo",
+    "lastName": "Clarkson",
+    "dateOfBirth": "1998-02-02",
+    "primaryContact": "2"
+  }
+]

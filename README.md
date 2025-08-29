@@ -1,19 +1,15 @@
-# Data verification, Connected fields and Data IO Extension App Reference Implementation
+# Data verification and Data IO Extension App Reference Implementation
 
 ## Introduction
 
-This reference implementation models consists of the data verification, connected fields and data io features.
+This reference implementation models consists of the data verification and data io features.
 
 The data verification part consists of seven use cases:
 
-- [Bank account owner verification](https://developers.docusign.com/extension-apps/extension-app-reference/extension-contracts/bank-account-owner-verification/)
-- [Bank account verification](https://developers.docusign.com/extension-apps/extension-app-reference/extension-contracts/bank-account-verification/)
-- [Business FEIN verification](https://developers.docusign.com/extension-apps/extension-app-reference/extension-contracts/business-fein-verification/)
 - [Email address verification](https://developers.docusign.com/extension-apps/extension-app-reference/extension-contracts/email-address-verification/)
 - [Phone verification](https://developers.docusign.com/extension-apps/extension-app-reference/extension-contracts/phone-verification/)
 - [SSN verification](https://developers.docusign.com/extension-apps/extension-app-reference/extension-contracts/ssn-verification/)
 - [Postal address verification](https://developers.docusign.com/extension-apps/extension-app-reference/extension-contracts/postal-address-verification/)
-- [Connected fields](https://developers.docusign.com/extension-apps/extension-app-reference/extension-contracts/connected-fields/)
 - [Data IO](https://developers.docusign.com/extension-apps/extension-app-reference/extension-contracts/data-io/)
 
 Each use case corresponds to a separate extension in the [manifest.json](/manifest.json) file of this repository.
@@ -151,31 +147,6 @@ For the data verification, this implementation uses mock data to simulate how da
 
 Request bodies much match the appropriate [action contract](https://developers.docusign.com/extension-apps/extension-app-reference/app-manifest-reference/action/):
 
-- [Bank account owner verification](https://developers.docusign.com/extension-apps/extension-app-reference/action-contracts/bank-account-owner-verification/#request) example JSON request body:
-  ```
-  {
-    "firstName": "Eliza",
-    "lastName": "Monroe",
-    "accountNumber": "123456789",
-    "accountType": "checking",
-    "routingNumber": "987654321"
-  }
-  ```
-- [Bank account verification](https://developers.docusign.com/extension-apps/extension-app-reference/action-contracts/bank-account-verification/#request) example JSON request body:
-  ```
-  {
-    "accountNumber": "123456789",
-    "accountType": "checking",
-    "routingNumber": "987654321"
-  }
-  ```
-- [Business FEIN verification](https://developers.docusign.com/extension-apps/extension-app-reference/action-contracts/business-fein-verification/#request) example JSON request body:
-  ```
-  {
-    "businessName": "VistaPeak Ventures",
-    "fein": "11-1111111"
-  }
-  ```
 - [Email address verification](https://developers.docusign.com/extension-apps/extension-app-reference/action-contracts/email-address-verification/#request) example JSON request body:
   ```
   {
@@ -252,55 +223,6 @@ Request bodies much match the appropriate [action contract](https://developers.d
       }]
     }
     ```
-
-### **Connected fields**
-
-The `typeName` property in the sample input maps to the name of a concept in the `model.cto` file. Any valid concept name can be used in this field.
-
-The `idempotencyKey` property in the sample input can be left as is.
-
-The `data` property in the sample input are the key-value pairs of the properties of the `typeName` that is being verified, where the key is the name of the property within the concept, and the value is the input to verify. For example, if the concept is defined as:
-
-```
-@VerifiableType
-@Term("Vehicle Identification")
-concept VehicleIdentification {
-    @IsRequiredForVerifyingType
-    @Term("VIN")
-    o String vin
-
-    @IsRequiredForVerifyingType
-    @Term("State of Registration")
-    o String stateOfRegistration
-
-    @IsRequiredForVerifyingType
-    @Term("Country of Registration")
-    o String countryOfRegistration
-}
-```
-
-Then the Verify request body would be:
-```
-{
-  "typeName": "VehicleIdentification",
-  "idempotencyKey": "mockIdempotencyKey",
-  "data": {
-    "vin": "XRHFCSNGUP4YBU5HB",
-    "stateOfRegistration": "CA",
-    "countryOfRegistration": "USA"
-  }
-}
-```
-
-Running the Verify test with the example request body above should return the following properties in the response:
-```
-{
-  "verified":true
-  "verifyResponseMessage":"Vehicle identification   verification completed."
-  "verificationResultCode":"SUCCESS"
-  "verificationResultDescription":"Vehicle identification   verification completed."
-}
-```
 
 ### **Data IO**
 

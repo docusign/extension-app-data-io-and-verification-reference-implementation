@@ -1,15 +1,15 @@
 [
     {
       "Id": "1",
-      "firstName": "Sarah",
-      "lastName": "Johnson",
-      "email": "s.johnson@techcorp.com"
+      "email": "s.johnson@techcorp.com",
+      "region": "1",
+      "phoneNumber": "1234567890"
     },
     {
       "Id": "2",
-      "firstName": "Michael",
-      "lastName": "Chen",
-      "email": "m.chen@techcorp.com"
+      "email": "m.chen@techcorp.com",
+      "region": "1",
+      "phoneNumber": "1987654321"
     }
   ]
   

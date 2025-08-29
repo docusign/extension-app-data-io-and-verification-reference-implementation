@@ -14,3 +14,40 @@ export interface EmailResponse {
   verified: boolean;
   verifyFailureReason?: string;
 }
+
+export interface PhoneNumberBody {
+  region: string;
+  phoneNumber: string;
+}
+
+export interface PhoneNumberResponse {
+  verified: boolean;
+  verifyFailureReason?: string;
+}
+
+export interface SSNBody {
+  socialSecurityNumber: string;
+  firstName: string;
+  lastName: string;
+  dateOfBirth: string;
+}
+
+export interface SSNResponse {
+  verified: boolean;
+  verifyFailureReason?: string;
+}
+
+export interface PostalAddressBody {
+  street1: string;
+  street2?: string;
+  locality: string;
+  postalCode: string;
+  countryOrRegion: string;
+  subdivision: string;
+}
+
+export interface PostalAddressResponse {
+  verified: boolean;
+  verifiedAddress?: PostalAddressBody;
+  verifyFailureReason?: string;
+}

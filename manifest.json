@@ -1,5 +1,5 @@
 {
-  "name": "Combined app - Data IO",
+  "name": "Combined app",
   "description": {
     "short": "App for data IO",
     "long": "This app is designed to allow for users to use data io extensions"
@@ -54,6 +54,33 @@
 				"PatchRecord Action",
 				"CreateRecord Action"
       ]
+    },
+    {
+      "name": "My Email Verification Extension",
+      "description": "Verify email",
+      "template": "Verify.Version1.Email",
+      "actionReferences": ["My Email Verification Action"]
+    },
+    {
+      "name": "My Phone Verification Extension",
+      "description": "Verify phone number",
+      "template": "Verify.Version1.PhoneNumber",
+      "actionReferences": ["My Phone Verification Action"]
+    },
+    {
+      "name": "My Postal Address Verification Extension",
+      "description": "Verify postal address",
+      "template": "Verify.Version1.PostalAddress",
+      "actionReferences": [
+        "postal-address-verify",
+        "postal-address-suggestion"
+      ]
+    },
+    {
+      "name": "My SSN Verification Extension",
+      "description": "Verify SSN",
+      "template": "Verify.Version2.SocialSecurityNumber",
+      "actionReferences": ["My SSN Verification Action"]
     }
   ],
   "actions": [
@@ -101,7 +128,52 @@
 			"params": {
 				"uri": "<PROXY_BASE_URL>/api/dataio/patchRecord"
 			}
-		}
+		},
+    {
+      "name": "My Email Verification Action",
+      "description": "Verify email with a proxy",
+      "template": "Verify.Version1.Email",
+      "connectionsReference": "authentication",
+      "params": {
+        "uri": "<PROXY_BASE_URL>/api/verify/email"
+      }
+    },
+    {
+      "name": "My Phone Verification Action",
+      "description": "Verify phone number with a proxy",
+      "template": "Verify.Version1.PhoneNumber",
+      "connectionsReference": "authentication",
+      "params": {
+        "uri": "<PROXY_BASE_URL>/api/verify/phone"
+      }
+    },
+    {
+      "name": "postal-address-verify",
+      "description": "Verify postal address with a proxy",
+      "template": "Verify.Version1.PostalAddress",
+      "connectionsReference": "authentication",
+      "params": {
+        "uri": "<PROXY_BASE_URL>/api/verify/postalAddress"
+      }
+    },
+    {
+      "name": "postal-address-suggestion",
+      "description": "Provide typeahead suggestions and verify postal address with a proxy",
+      "template": "Typeahead.Version1.PostalAddress",
+      "connectionsReference": "authentication",
+      "params": {
+        "uri": "<PROXY_BASE_URL>/api/verify/typeaheadAddress"
+      }
+    },
+    {
+      "name": "My SSN Verification Action",
+      "description": "Verify SSN with a proxy",
+      "template": "Verify.Version2.SocialSecurityNumber",
+      "connectionsReference": "authentication",
+      "params": {
+        "uri": "<PROXY_BASE_URL>/api/verify/ssn"
+      }
+    }
   ],
   "publicationRegions": [
     "US"
