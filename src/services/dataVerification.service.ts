@@ -57,7 +57,7 @@ export const verifyPhoneNumber = (req: IReq<PhoneNumberBody>, res: IRes) => {
 
     // Regular expression to match phone number formats after normalization
     const phoneRegexes: { [key: string]: RegExp } = {
-      '1': /^\d{10}$/, 
+      '1': /^\d{11}$/, 
     };
 
     // Check if the provided region has a corresponding regex pattern
@@ -127,14 +127,6 @@ export const verifyTypeaheadPostalAddress = (req: IReq<PostalAddressBody>, res: 
     body: { street1, street2, locality, postalCode, countryOrRegion, subdivision },
   } = req;
   try {
-    const attributeValueMap = {
-      street1,
-      street2,
-      locality,
-      postalCode,
-      countryOrRegion,
-      subdivision,
-    };
     const from = 'Address';
     const db: FileDB = new FileDB(generateFilePath(from));
     const data: object[] = db.readFile();
