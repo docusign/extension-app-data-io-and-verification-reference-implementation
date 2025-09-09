@@ -46,6 +46,13 @@ export interface PostalAddressBody {
   subdivision: string;
 }
 
+export interface PostalAddressRecord extends PostalAddressBody {
+  Id: string;
+  primaryContact: string;
+}
+
+export type PostalAddressBody2 = Pick<PostalAddressRecord, keyof PostalAddressBody>
+
 export interface PostalAddressResponse {
   verified: boolean;
   verifiedAddress?: PostalAddressBody;

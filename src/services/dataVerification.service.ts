@@ -4,16 +4,16 @@ import {
   PhoneNumberBody,
   PhoneNumberResponse,
   PostalAddressBody,
+  PostalAddressRecord,
   PostalAddressResponse,
   SSNBody,
   SSNResponse,
 } from '../models/dataVerification';
 import { FileDB } from '../db/fileDB';
-import { IReq, IRes } from '../utils/types';
+import { IReq, IRes, stripKeys } from '../utils/types';
 import { generateFilePath } from './dataio.service';
 import { QueryExecutor } from '../utils/queryExecutor';
 import { constructSearchQuery } from '../utils/dataVerification';
-import { Operator } from 'src/models/IQuery';
 import moment from 'moment';
 
 export const verifyEmail = (req: IReq<EmailBody>, res: IRes) => {
@@ -107,13 +107,14 @@ export const verifyPostalAddress = (req: IReq<PostalAddressBody>, res: IRes) => 
     const from = 'Address';
     const query = constructSearchQuery(attributeValueMap, from);
     const db: FileDB = new FileDB(generateFilePath(from));
-    const data: object[] = db.readFile();
+    const data = db.readFile() as unknown[] as PostalAddressRecord[];
     const addressFound = QueryExecutor.execute(query, data);
     if (addressFound === -1) {
       throw new Error('No matching address found. Verification failed.');
     }
 
-    const result: PostalAddressResponse = { verified: true };
+    const verifiedAddress = stripKeys(data[addressFound], 'Id', 'primaryContact');
+    const result: PostalAddressResponse = { verified: true, verifiedAddress };
     return res.json(result);
   } catch (err) {
     console.error(`Encountered an error verifying postal address: ${err.message}`);
@@ -129,15 +130,15 @@ export const verifyTypeaheadPostalAddress = (req: IReq<PostalAddressBody>, res: 
   try {
     const from = 'Address';
     const db: FileDB = new FileDB(generateFilePath(from));
-    const data: object[] = db.readFile();
-    const suggestions = data.filter((address: any) =>
+    const data = db.readFile() as unknown[] as PostalAddressRecord[];
+    const suggestions = data.filter((address) =>
       address.street1.toLowerCase().includes(street1.toLowerCase()) &&
       address.locality.toLowerCase().includes(locality.toLowerCase()) &&
       address.subdivision.toUpperCase().includes(subdivision.toUpperCase()) &&
       address.countryOrRegion.toLowerCase().includes(countryOrRegion.toLowerCase()) &&
-      address.postalCode.includes(postalCode));
+      address.postalCode.includes(postalCode)).map((address) => stripKeys(address, 'Id', 'primaryContact'));
 
-    if (suggestions.some((address: any) => (address.street2 && !street2) || (street2 && address.street2.toLowerCase() !== street2.toLowerCase()))) {
+    if (suggestions.some((address) => (address.street2 && !street2) || (street2 && address.street2?.toLowerCase() !== street2.toLowerCase()))) {
       throw new Error('MISSING_OR_WRONG_SECONDARY_INFORMATION');
     }
 
