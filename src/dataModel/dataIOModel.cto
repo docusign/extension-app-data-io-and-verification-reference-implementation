@@ -1,0 +1,89 @@
+namespace org.example@1.0.0
+
+@Term("Contact")
+@Crud("Createable,Readable,Updateable,Deletable")
+concept Contact identified by Id {
+    @Term("Contact ID")
+    @Crud("Readable")
+    o String Id
+
+    @Term("Email")
+    @Crud("Createable,Readable,Updateable")
+    o String email
+    
+    @Term("Country Code")
+    @Crud("Createable,Readable,Updateable")
+    o String countryCode
+    
+    @Term("Phone Number")
+    @Crud("Createable,Readable,Updateable")
+    o String phoneNumber
+}
+
+@Term("Address")
+@Crud("Createable,Readable,Updateable")
+concept Address identified by Id {
+    @Term("Address ID")
+    @Crud("Readable")
+    o String Id length=[0, 18]
+
+    @Term("Name")
+    @Crud("Createable,Readable,Updateable")
+    o String Name length=[0, 18]  optional
+
+    @Term("Street 1")
+    @Crud("Createable,Readable,Updateable")
+    o String street1 length=[0, 255]  optional
+
+    @Term("Street 2")
+    @Crud("Createable,Readable,Updateable")
+    o String street2 length=[0, 255] optional
+
+    @Term("Locality")
+    @Crud("Createable,Readable,Updateable")
+    o String locality length=[0, 255] optional
+
+    @Term("Subdivision")
+    @Crud("Createable,Readable,Updateable")
+    o String subdivision length=[0, 100] optional
+
+    @Term("Country or Region")
+    @Crud("Createable,Readable,Updateable")
+    o String countryOrRegion length=[0, 100] optional
+
+    @Term("Postal Code")
+    @Crud("Createable,Readable,Updateable")
+    o String postalCode length=[0, 20] optional
+
+    @Term("Contact Reference")
+    @Crud("Createable,Readable,Updateable")
+    --> Contact primaryContact optional
+}
+
+@Term("SSN")
+@Crud("Creatable,Readable,Updatable")
+concept SSN identified by Id {
+    @Term("SSN ID")
+    @Crud("Readable")
+    o String Id length=[0, 18]
+
+    @Term("First Name")
+    @Crud("Createable,Readable,Updateable")
+    o String firstName
+
+    @Term("Last Name")
+    @Crud("Createable,Readable,Updateable")
+    o String lastName
+
+    @Term("Date of Birth")
+    @Crud("Createable,Readable,Updateable")
+    o String dateOfBirth
+
+    @Term("Social Security Number")
+    @Crud("Createable,Readable,Updateable")
+    o String ssn
+
+    @Term("Contact Reference")
+    @Crud("Createable,Readable,Updateable")
+    --> Contact primaryContact optional
+}

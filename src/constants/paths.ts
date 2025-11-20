@@ -2,38 +2,41 @@ import { Immutable } from "../utils/types";
 
 const paths = {
   Base: "/api",
-  Archive: {
-    Base: "/",
-    File: {
-      Post: "/archive",
+  DataIO: {
+    Base: '/dataio',
+    PatchRecord: {
+      Post: '/patchRecord',
     },
+    SearchRecords: {
+      Post: '/searchRecords',
+    },
+    CreateRecord: {
+      Post: '/createRecord',
+    },
+    GetTypeNames: {
+      Post: '/getTypeNames',
+    },
+    GetTypeDefinitions: {
+      Post: '/getTypeDefinitions',
+    }
   },
   Verify: {
     Base: "/verify",
-    BankAccountOwner: {
-      Post: "/bankAccountOwner",
-    },
-    BankAccount: {
-      Post: "/bankAccount",
-    },
     Email: {
       Post: "/email",
     },
-    BusinessFEIN: {
-      Post: "/businessFEIN",
-    },
     PhoneNumber: {
-      Post: "/phone",
+      Post: '/phone',
     },
     SSN: {
-      Post: "/ssn",
+      Post: '/ssn',
     },
     PostalAddress: {
-      Post: "/postalAddress",
+      Post: '/postalAddress',
     },
     TypeaheadAddress: {
-      Post: "/typeaheadAddress",
-    },
+      Post: '/typeaheadAddress'
+    }
   },
   Auth: {
     Base: "/oauth",

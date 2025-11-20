@@ -1,0 +1,22 @@
+[
+  {
+    "Id": "1",
+    "street1": "123 Main St",
+    "street2": "Apt 4B",
+    "locality": "Springfield",
+    "subdivision": "IL",
+    "countryOrRegion": "US",
+    "postalCode": "62701",
+    "primaryContact": "1"
+  },
+  {
+    "Id": "2",
+    "street1": "456 Elm St",
+    "street2": "Suite 101",
+    "locality": "Metropolis",
+    "subdivision": "NY",
+    "countryOrRegion": "US",
+    "postalCode": "10001",
+    "primaryContact": "2"
+  }
+]

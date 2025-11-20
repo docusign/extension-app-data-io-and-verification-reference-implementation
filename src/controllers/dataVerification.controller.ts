@@ -1,50 +1,14 @@
 import { Router } from 'express';
 
 import Paths from '../constants/paths';
-import { verifyBankAccountOwner } from '../services/bankAccountOwnerVerification.service';
-import { verifyBankAccount } from '../services/bankAccountVerification.service';
-import { verifyEmail } from '../services/emailVerification.service';
-import { verifyBusinessFEIN } from '../services/businessFeinVerification.service';
-import { verifyPhoneNumber } from '../services/phoneVerification.service';
-import { verifySSN } from '../services/ssnVerification.service';
-import { verifyPostalAddress, verifyTypeaheadPostalAddress } from '../services/postalAddressVerification.service';
+import { verifyEmail, verifyPhoneNumber, verifyPostalAddress, verifyTypeaheadPostalAddress, verifySSN } from '../services/dataVerification.service';
 import { expressjwt as jwt } from 'express-jwt';
 import { checkSchema } from 'express-validator';
-import {
-  bankAccountOwnerBody,
-  bankAccountBody,
-  emailBody,
-  businessFEINBody,
-  phoneNumberBody,
-  ssnBody,
-  postalAddressBody,
-} from '../validationSchemas/dataVerification';
+import { emailBody, phoneNumberBody, postalAddressBody, ssnBody } from '../validationSchemas/dataVerification';
 import checkValidationErrors from '../middleware/checkValidationErrors';
 import env from '../env';
 
 const dataVerificationRouter = Router();
-
-dataVerificationRouter.post(
-  Paths.Verify.BankAccountOwner.Post,
-  jwt({
-    secret: env.JWT_SECRET_KEY,
-    algorithms: ['HS256'],
-  }),
-  checkSchema(bankAccountOwnerBody, ['body']),
-  checkValidationErrors,
-  verifyBankAccountOwner,
-);
-
-dataVerificationRouter.post(
-  Paths.Verify.BankAccount.Post,
-  jwt({
-    secret: env.JWT_SECRET_KEY,
-    algorithms: ['HS256'],
-  }),
-  checkSchema(bankAccountBody, ['body']),
-  checkValidationErrors,
-  verifyBankAccount,
-);
 
 dataVerificationRouter.post(
   Paths.Verify.Email.Post,
@@ -55,17 +19,6 @@ dataVerificationRouter.post(
   checkSchema(emailBody, ['body']),
   checkValidationErrors,
   verifyEmail,
-);
-
-dataVerificationRouter.post(
-  Paths.Verify.BusinessFEIN.Post,
-  jwt({
-    secret: env.JWT_SECRET_KEY,
-    algorithms: ['HS256'],
-  }),
-  checkSchema(businessFEINBody, ['body']),
-  checkValidationErrors,
-  verifyBusinessFEIN,
 );
 
 dataVerificationRouter.post(
@@ -111,4 +64,5 @@ dataVerificationRouter.post(
   checkValidationErrors,
   verifyTypeaheadPostalAddress,
 );
+
 export default dataVerificationRouter;

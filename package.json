@@ -1,14 +1,17 @@
 {
-  "name": "extension-app-file-archive-reference-implementation",
+  "name": "extension-app-data-io-and-verification-reference-implementation",
   "version": "1.0.0",
   "scripts": {
-    "build": "tsc --build tsconfig.json && npm run copy-views",
+    "build": "tsc --build tsconfig.json && npm run copy-views && npm run copy-files",
     "lint": "npx eslint --ext .ts src/",
     "start": "node ./dist --env=development",
     "dev": "nodemon",
     "copy-views": "run-script-os",
     "copy-views:windows": "xcopy views dist\\views /E /I /Y",
-    "copy-views:default": "cp -r views dist/"
+    "copy-views:default": "cp -r views dist/",
+    "copy-files": "run-script-os",
+    "copy-files:windows": "xcopy src\\dataModel dist\\dataModel /E /I /Y && xcopy src\\db\\*.json dist\\db /E /I /Y",
+    "copy-files:default": "cp -r src/dataModel dist/dataModel && cp src/db/*.json dist/db/"
   },
   "nodemonConfig": {
     "watch": [
@@ -19,32 +22,45 @@
     "exec": "./node_modules/.bin/ts-node --files -r tsconfig-paths/register ./src"
   },
   "dependencies": {
+    "@accordproject/concerto-cli": "^3.16.6",
+    "@accordproject/concerto-core": "~3.19.6",
+    "@accordproject/concerto-types": "~3.19.6",
+    "ajv": "^8.17.1",
+    "csv-parse": "^5.6.0",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "express-async-errors": "^3.1.1",
     "express-jwt": "^8.4.1",
     "express-validator": "^7.0.1",
     "helmet": "^7.0.0",
+    "install": "^0.13.0",
     "jsonwebtoken": "^9.0.0",
+    "moment": "^2.30.1",
     "morgan": "^1.10.0",
+    "npm": "^11.0.0",
     "pug": "^3.0.2",
+    "run-script-os": "1.1.6",
     "ts-command-line-args": "^2.5.0",
-    "run-script-os": "1.1.6"
+    "ts-force": "^3.4.3"
   },
   "devDependencies": {
     "@eslint/js": "^9.18.0",
     "@types/express": "^4.17.17",
+    "@types/jest": "^29.5.14",
     "@types/jsonwebtoken": "^9.0.2",
     "@types/morgan": "^1.9.4",
     "@types/node": "^20.2.3",
     "@types/pug": "^2.0.8",
     "@typescript-eslint/eslint-plugin": "^5.59.7",
     "@typescript-eslint/parser": "^5.59.7",
+    "cpx": "^1.5.0",
     "eslint": "^8.57.1",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-prettier": "^5.2.2",
     "globals": "^15.14.0",
+    "jest": "^29.7.0",
     "nodemon": "^2.0.22",
+    "ts-jest": "^29.2.5",
     "ts-node": "^10.9.1",
     "tsconfig-paths": "^4.2.0",
     "typescript": "^5.0.4",
