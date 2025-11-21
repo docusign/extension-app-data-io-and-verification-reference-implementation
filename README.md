@@ -1,7 +1,7 @@
-# Data verification and Data IO Extension App Reference Implementation
+# Data Verification and Data IO Extension App Reference Implementation
 
 ## Introduction
-This reference implementation models consists of the data verification and data io features.
+This reference implementation implements the data verification and data IO extensions.
 
 The data verification part consists of seven use cases:
 
@@ -16,12 +16,12 @@ To test this reference implementation, modify the `manifest.json` file.
 ## Authentication
 This reference implementation supports two [authentication](https://developers.docusign.com/extension-apps/build-an-extension-app/it-infrastructure/authorization/) flows:
 * [Authorization Code Grant](https://developers.docusign.com/extension-apps/build-an-extension-app/it-infrastructure/authorization/#authorization-code-grant) – required for public extension apps
-* [Client Credentials Grant](https://developers.docusign.com/extension-apps/build-an-extension-app/it-infrastructure/authorization/#client-credentials-grant) – available to private extension apps. See [Choosing private distribution instead of public](https://developers.docusign.com/extension-apps/extension-apps-101/choosing-private-distribution/)
+* [Client Credentials Grant](https://developers.docusign.com/extension-apps/build-an-extension-app/it-infrastructure/authorization/#client-credentials-grant) – available to private extension apps. See [Choosing private distribution instead of public](https://developers.docusign.com/extension-apps/extension-apps-101/choosing-private-distribution/).
 
 *Private extension apps can use either authentication method, but public extension apps must use Authorization Code Grant.*
 
-## Hosted Version (no setup required)
-You can use the hosted version of this reference implementation by directly uploading the appropriate manifest file located in the [manifests/hosted/](manifests/hosted) folder to the Docusign Developer Console. See [Upload your manifest and create the file archive app](#3-upload-your-manifest-and-create-the-connected-fields-app).
+## Hosted version (no setup required)
+You can use the hosted version of this reference implementation by directly uploading the appropriate manifest file located in the [manifests/hosted/](manifests/hosted) folder to the Docusign Developer Console. See [Upload your manifest and create the extension app](#3-upload-your-manifest-and-create-the-extension-app).
 
 **Note:** The provided manifest includes `clientId` and `clientSecret` values used in the sample authentication connection. These do not authenticate to a real system, but the hosted reference implementation requires these exact values.
 
@@ -85,10 +85,10 @@ npm run start
 
 This will start a production build on the port in the `production.env` file (port 3000 by default).
 
-## Setting up ngrok
+## Set up ngrok
 ### 1. [Install and configure ngrok for your machine.](https://ngrok.com/docs/getting-started/)
 ### 2. Start ngrok
-Run the following command to create a public accessible tunnel to your localhost:
+Run the following command to create a publicly accessible tunnel to your localhost:
 
 ```bash
 ngrok http <PORT>
@@ -127,21 +127,21 @@ Choose a manifest from the [manifests](manifests/) folder based on the appropria
 - `actions.params.uri`
 
 Update the following variables in your manifest.json file with the corresponding environment variables:
-- Set the `clientId` value in your .manifest.json file to the same value as `OAUTH_CLIENT_ID`.
-- Set the `clientSecret` value in your .manifest.json file to the same value as `OAUTH_CLIENT_SECRET`.
+- Set the `clientId` value in your manifest.json file to the same value as `OAUTH_CLIENT_ID`.
+- Set the `clientSecret` value in your manifest.json file to the same value as `OAUTH_CLIENT_SECRET`.
 
 ### 2. Navigate to the Docusign [Developer Console](https://devconsole.docusign.com/)
-Log in with your Docusign developer credentials and create a new app.
+Log in with your Docusign developer credentials.
 
-### 3. Upload your manifest and create the extension app
-[Create your extension app](https://developers.docusign.com/extension-apps/build-an-extension-app/create/)
+### 3. Upload your manifest
+Register your extension app by [uploading your app manifest](https://developers.docusign.com/extension-apps/build-an-extension-app/register/use-manifest/).
 
 ## Test the extension app
 
-[Test your extension](https://developers.docusign.com/extension-apps/build-an-extension-app/test/). Extension app tests include [integration tests](https://developers.docusign.com/extension-apps/build-an-extension-app/test/integration-tests/) (connection tests and extension tests), [functional tests](https://developers.docusign.com/extension-apps/build-an-extension-app/test/functional-tests/), and [App Center preview](https://developers.docusign.com/extension-apps/build-an-extension-app/test/app-center-preview/).
+[Test your extension app](https://developers.docusign.com/extension-apps/build-an-extension-app/test/). Extension app tests include [integration tests](https://developers.docusign.com/extension-apps/build-an-extension-app/test/integration-tests/) (connection tests and extension tests), [functional tests](https://developers.docusign.com/extension-apps/build-an-extension-app/test/functional-tests/), and [App Center preview](https://developers.docusign.com/extension-apps/build-an-extension-app/test/app-center-preview/).
 
 ### **Data verification**
-For the data verification, this implementation uses mock data to simulate how data can be verified against a database. [Test your extension](https://developers.docusign.com/extension-apps/build-an-extension-app/test/) using the sample data in the [database folder](src/db/).
+For the data verification extensions, this implementation uses mock data to simulate how data can be verified. [Test your extension](https://developers.docusign.com/extension-apps/build-an-extension-app/test/) using the sample data in the [database folder](src/db/).
 
 Request bodies much match the appropriate [action contract](https://developers.docusign.com/extension-apps/extension-app-reference/app-manifest-reference/action/):
 - [Email address verification](https://developers.docusign.com/extension-apps/extension-app-reference/action-contracts/email-address-verification/#request) example JSON request body:
@@ -168,13 +168,11 @@ Request bodies much match the appropriate [action contract](https://developers.d
   }
   ```
 
-- [Postal address verification](https://developers.docusign.com/extension-apps/extension-app-reference/extension-contracts/postal-address-verification#request/) There are two actions required by the postal address data verification extension contract.
+- [Postal address verification](https://developers.docusign.com/extension-apps/extension-app-reference/extension-contracts/postal-address-verification#request/) The postal address data verification extension contract requires two actions:
 
-  - Verify.Version1.PostalAddress: This action will return the verified address with a successful response if the request body exactly matches an entry in the sample database.
+  - `Verify.Version1.PostalAddress`: This action will return the verified address with a successful response if the request body exactly matches an entry in the sample database.
 
     Example JSON request body:
-
-    **Note:** "street2" is an optional parameter.
 
     ```
     {
@@ -188,11 +186,11 @@ Request bodies much match the appropriate [action contract](https://developers.d
 
     ```
 
-  - Typeahead.Version1.PostalAddress: This action will return a list of suggested addresses based on if the sample database contains one or more partial matches to the request body.
+    **Note:** "street2" is an optional parameter.
+
+  - `Typeahead.Version1.PostalAddress`: This action will return a list of suggested addresses if the sample database contains one or more partial matches to the request body.
 
     Example JSON request body:
-
-    **Note:** "street2" is an optional parameter.
 
     ```
     {
@@ -205,6 +203,8 @@ Request bodies much match the appropriate [action contract](https://developers.d
     }
 
     ```
+     **Note:** "street2" is an optional parameter.
+
 
     Example JSON response:
 
