@@ -16,7 +16,7 @@ variable "location" {
   description = "The location/region where the resources will be created"
   type        = string
   nullable    = false
-  default     = "West Europe"
+  default     = "West US 2"
 }
 
 variable "docker_host" {
@@ -42,7 +42,7 @@ variable "application_name" {
   description = "The name of the application"
   type        = string
   nullable    = false
-  default     = "extension-app-data-io-verification"
+  default     = "extension-app-data-io-and-dv"
 
   validation {
     condition     = can(regex("^[a-zA-Z0-9-]+$", var.application_name)) && length(var.application_name) <= 37
