@@ -26,11 +26,11 @@
       "params": {
         "provider": "CUSTOM",
         "scopes": [],
-        "clientId": "<CLIENT_ID>",
-        "clientSecret": "<CLIENT_SECRET>",
+        "clientId": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+        "clientSecret": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
         "customConfig": {
-          "tokenUrl": "<PROXY_BASE_URL>/api/oauth/token",
-          "authorizationUrl": "<PROXY_BASE_URL>/api/oauth/authorize",
+          "tokenUrl": "https://app-extension-app-data-io-and-dv-15a7.azurewebsites.net/api/oauth/token",
+          "authorizationUrl": "https://app-extension-app-data-io-and-dv-15a7.azurewebsites.net/api/oauth/authorize",
           "authorizationParams": {
             "access_type": "offline",
             "prompt": "consent"
@@ -90,7 +90,7 @@
       "template": "DataIO.Version6.GetTypeNames",
       "connectionsReference": "authentication",
       "params": {
-        "uri": "<PROXY_BASE_URL>/api/dataio/getTypeNames"
+        "uri": "https://app-extension-app-data-io-and-dv-15a7.azurewebsites.net/api/dataio/getTypeNames"
       }
     },
     {
@@ -99,7 +99,7 @@
       "template": "DataIO.Version6.GetTypeDefinitions",
       "connectionsReference": "authentication",
       "params": {
-        "uri": "<PROXY_BASE_URL>/api/dataio/getTypeDefinitions"
+        "uri": "https://app-extension-app-data-io-and-dv-15a7.azurewebsites.net/api/dataio/getTypeDefinitions"
       }
     },
     {
@@ -108,7 +108,7 @@
       "template": "DataIO.Version6.CreateRecord",
       "connectionsReference": "authentication",
       "params": {
-        "uri": "<PROXY_BASE_URL>/api/dataio/createRecord"
+        "uri": "https://app-extension-app-data-io-and-dv-15a7.azurewebsites.net/api/dataio/createRecord"
       }
     },
 		{
@@ -117,7 +117,7 @@
 			"template": "DataIO.Version6.SearchRecords",
 			"connectionsReference": "authentication",
 			"params": {
-				"uri": "<PROXY_BASE_URL>/api/dataio/searchRecords"
+				"uri": "https://app-extension-app-data-io-and-dv-15a7.azurewebsites.net/api/dataio/searchRecords"
 			}
 		},
 		{
@@ -126,7 +126,7 @@
 			"template": "DataIO.Version6.PatchRecord",
 			"connectionsReference": "authentication",
 			"params": {
-				"uri": "<PROXY_BASE_URL>/api/dataio/patchRecord"
+				"uri": "https://app-extension-app-data-io-and-dv-15a7.azurewebsites.net/api/dataio/patchRecord"
 			}
 		},
     {
@@ -135,7 +135,7 @@
       "template": "Verify.Version1.Email",
       "connectionsReference": "authentication",
       "params": {
-        "uri": "<PROXY_BASE_URL>/api/verify/email"
+        "uri": "https://app-extension-app-data-io-and-dv-15a7.azurewebsites.net/api/verify/email"
       }
     },
     {
@@ -144,7 +144,7 @@
       "template": "Verify.Version1.PhoneNumber",
       "connectionsReference": "authentication",
       "params": {
-        "uri": "<PROXY_BASE_URL>/api/verify/phone"
+        "uri": "https://app-extension-app-data-io-and-dv-15a7.azurewebsites.net/api/verify/phone"
       }
     },
     {
@@ -153,7 +153,7 @@
       "template": "Verify.Version1.PostalAddress",
       "connectionsReference": "authentication",
       "params": {
-        "uri": "<PROXY_BASE_URL>/api/verify/postalAddress"
+        "uri": "https://app-extension-app-data-io-and-dv-15a7.azurewebsites.net/api/verify/postalAddress"
       }
     },
     {
@@ -162,7 +162,7 @@
       "template": "Typeahead.Version1.PostalAddress",
       "connectionsReference": "authentication",
       "params": {
-        "uri": "<PROXY_BASE_URL>/api/verify/typeaheadAddress"
+        "uri": "https://app-extension-app-data-io-and-dv-15a7.azurewebsites.net/api/verify/typeaheadAddress"
       }
     },
     {
@@ -171,7 +171,7 @@
       "template": "Verify.Version2.SocialSecurityNumber",
       "connectionsReference": "authentication",
       "params": {
-        "uri": "<PROXY_BASE_URL>/api/verify/ssn"
+        "uri": "https://app-extension-app-data-io-and-dv-15a7.azurewebsites.net/api/verify/ssn"
       }
     }
   ],
