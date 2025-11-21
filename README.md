@@ -1,17 +1,14 @@
 # Data Verification and Data IO Extension App Reference Implementation
 
 ## Introduction
-This reference implementation implements the data verification and data IO extensions.
+This reference implementation implements the data verification and [data IO](https://developers.docusign.com/extension-apps/extension-app-reference/extension-contracts/data-io/) extensions.
 
-The data verification part consists of seven use cases:
+These data verification extensions are used:
 
 - [Email address verification](https://developers.docusign.com/extension-apps/extension-app-reference/extension-contracts/email-address-verification/)
 - [Phone verification](https://developers.docusign.com/extension-apps/extension-app-reference/extension-contracts/phone-verification/)
 - [SSN verification](https://developers.docusign.com/extension-apps/extension-app-reference/extension-contracts/ssn-verification/)
 - [Postal address verification](https://developers.docusign.com/extension-apps/extension-app-reference/extension-contracts/postal-address-verification/)
-- [Data IO](https://developers.docusign.com/extension-apps/extension-app-reference/extension-contracts/data-io/)
-
-To test this reference implementation, modify the `manifest.json` file.
 
 ## Authentication
 This reference implementation supports two [authentication](https://developers.docusign.com/extension-apps/build-an-extension-app/it-infrastructure/authorization/) flows:
@@ -45,7 +42,7 @@ git clone https://github.com/docusign/extension-app-data-io-and-verification-ref
 ### 2. [Install and configure Node.js and npm on your machine.](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
 
 ### 3. Generate secret values
-- If you already have values for `JWT_SECRET_KEY`, `OAUTH_CLIENT_ID`, `OAUTH_CLIENT_SECRET`, and `AUTHORIZATION_CODE`, you may skip this step.
+If you already have values for `JWT_SECRET_KEY`, `OAUTH_CLIENT_ID`, `OAUTH_CLIENT_SECRET`, and `AUTHORIZATION_CODE`, you may skip this step.
 
 The easiest way to generate a secret value is to run the following command:
 ```bash
@@ -68,7 +65,7 @@ npm install
 
 ### 6. Running the proxy server
 #### Development mode:
-Start the proxy server in development mode by running the command:
+Start the proxy server in development mode by running
 
 ```bash
 npm run dev
@@ -226,7 +223,7 @@ Request bodies much match the appropriate [action contract](https://developers.d
 
 
 #### CreateRecord extension test
-To begin the extension test process, run the CreateRecord test using the sample query below. The test should return a response containing the record ID.
+To begin the extension test process, run the CreateRecord test using the sample request body below. The test should return a response containing the record ID.
 
 ```json
 {
@@ -249,7 +246,7 @@ This query searches the records that have been created. You don’t have to use 
 
 Open the SearchRecords test and create a new query based on the `Account.json` file:
 
-- The `from` attribute maps to the value of `typeName` in the CreateRecord query; in this case, `Account`.
+- The `from` attribute maps to the value of `typeName` in the CreateRecord request body; in this case, `Account`.
 - The `data` array from the CreateRecord query maps to the `attributesToSelect` array; in this case, `Name`.
 - The `name` property of the `leftOperand` object should be the value of `Name`; in this case, `Test Account`.
 - The `operator` value should be `EQUALS`.
@@ -297,7 +294,7 @@ Running the test will return the record you queried.
 #### PatchRecord extension test
 The `recordId` property in the sample input maps to an `Id` in the `Account.json` file. Any valid record ID can be used in this field.
 
-In the `data` array, include any attributes and values to be added to the record. In this query, a new property will be added, and the original data in the record will be updated.
+In the `data` array, include any attributes and values to be added to the record. In this request, a new property will be added, and the original data in the record will be updated.
 
 ```bash
 {
@@ -358,6 +355,6 @@ Rerun the SearchRecords extension test to search for the new patched values.
 ![Results of SearchRecords after PatchRecord](https://github.com/user-attachments/assets/70dbce23-0c9d-4150-ab25-c853e92d695f)
 
 
-Alternatively, the `Account.json` file will contain the updated records.
+The `Account.json` file will contain the updated records.
 
 ![Account.json after PatchRecord test](https://github.com/user-attachments/assets/ace8276b-2d36-4171-a598-2450e6d9b5fe)
