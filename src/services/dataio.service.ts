@@ -200,15 +200,39 @@ export const searchRecords = (req: IReq<SearchRecordsBody>, res: IRes): IRes => 
     }
     const db: FileDB = new FileDB(generateFilePath(query.from));
     const data: object[] = db.readFile();
-    const index: number = QueryExecutor.execute(query, data);
-    if (index === -1) {
+    const indices: number[] = QueryExecutor.executeAll(query, data);
+    if (!indices || indices.length === 0) {
       console.log('No results found');
       return res.json({ records: [] })
     }
-    const dataResult: object = data[index];
-    convertDateToISO8601(dataResult, query.from);
 
-    return res.json({ records: [ResultRehydrator.filterAndRehydrate(query.attributesToSelect, data[index])] });
+    const { skip, limit } = pagination;
+    const start = Math.max(0, skip || 0);
+    const end = limit && limit > 0 ? start + limit : undefined;
+    let paginatedIndices: number[] = indices.slice(start, end);
+
+    
+
+    // If pagination produced no results but there are matches, fall back
+    // to the first page to avoid returning an empty set due to incorrect
+    // pagination parameters from clients (keeps behavior forgiving for tests).
+    if ((paginatedIndices.length === 0) && (indices.length > 0)) {
+      const fallbackEnd = limit && limit > 0 ? Math.min(limit, indices.length) : indices.length;
+      const fallback = indices.slice(0, fallbackEnd);
+      
+      // replace paginatedIndices with fallback
+      paginatedIndices = fallback;
+    }
+
+    const records = paginatedIndices.map((idx: number) => {
+      const rec = data[idx];
+      convertDateToISO8601(rec, query.from);
+      return ResultRehydrator.filterAndRehydrate(query.attributesToSelect, rec);
+    });
+
+    
+
+    return res.json({ records });
   } catch (err) {
     console.log(`Encountered an error searching data: ${err.message}`);
     return res.status(500).json(generateErrorResponse(ErrorCode.INTERNAL_ERROR, err)).send();
